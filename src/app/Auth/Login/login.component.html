@@ -1,0 +1,23 @@
+<div class="content_login" id="content_login_principal">
+    <form [formGroup]="formLogin" (submit)="EnviarInf()" class="content_login">
+        <h1 class="titulos">Iniciar Sesión</h1>
+        <!--Ingreso de email-->
+        <input type="email" class="entrada" formControlName="Email" name="correo" id="input_email" placeholder="Email">
+        <label for="email" class="texts_error">{{error_email}}</label>
+        <!--ingreso de email-->
+        <input type="password" formControlName="Password"  class="entrada" name="contrasena" placeholder="Password">
+        <label for="contrasena" class="texts_error">{{error_password}}</label>
+        <!--Enviar-->
+        <input type="submit" id="ingresar" value="Ingresar">
+        <div id="content-router">
+            <!--Olvidar contraseña-->
+            <a routerLink="/auth/login/forget">¿Olvidaste la contraseña?</a>
+            <!--registrase-->
+            <div class="registro-router">
+                <p style="color:#626567">¿Aun no estas registrado?</p>
+                <a (click)="RouterRegistro()">Registrarse</a>
+            </div>
+        </div>
+        
+    </form>
+</div>

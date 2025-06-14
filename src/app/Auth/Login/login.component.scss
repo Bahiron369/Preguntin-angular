@@ -1,0 +1,49 @@
+@use '../style/estilos_generales.scss' as mx;
+
+#content_login_principal{
+       @include mx.content_principal;
+}
+
+.content_login{
+    @include mx.contenedor(0.1em);
+}
+
+.entrada{
+    @include mx.entradas( #3498db);
+}
+
+.titulos{
+  @include mx.text_principal(#626567,2em);
+  margin-bottom: 1.5em;
+}
+
+.texts_error{
+    @include mx.errors(0.3em,0.8em);
+    margin-top: 0.5em;
+}
+#ingresar{
+    @include mx.boton(#3498db,#5dade2,white,#2874a6,40%,2.5em);
+    margin-top: 1.5em;
+}
+
+#content-router{
+    @include mx.contenedores-pequenos;
+    flex-direction: row;
+    gap: 2em;
+    margin-top: 2em;
+    
+}
+
+.registro-router{
+     @include mx.contenedores-pequenos;
+}
+#content-router a:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    color: #3498db;
+}
+
+#content-router a{
+    all:unset;
+    color: #a6acaf;
+}

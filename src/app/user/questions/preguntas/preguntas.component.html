@@ -1,0 +1,62 @@
+<div id="main_pregunta">
+
+    @if(start){
+        <div id="preguntas">
+            <div class="pregunta" [ngStyle]="{'background-color' : colorFondo, 'border-color':colorBorde, 'box-shadow': '0px 1px 2.5px 1.2px' + colorBorde}">
+                <p id="titulo">{{preguntas.question}}</p>
+                @if(preguntas.type=='multiple'){
+                    @for(item of indexRespuesta; track item; let index = $index ){
+
+                        @if(mostrarRespuesta&&respuestas[index]==preguntas.correct_answer){
+                            <button style="background-color: green;">{{item}}. {{respuestas[index]}}</button>
+                        }@else if(eliminarDosRespuesta&&respuestas[index]!=preguntas.correct_answer){
+                            <button style="background-color: red;">{{item}}. {{respuestas[index]}}</button>
+                        }@else {
+                            <button>{{item}}. {{respuestas[index]}}</button>
+                        }
+                    }
+                }@else if (preguntas.type=="boolean") {
+                      @for(item of respuestas; track respuestas; let index = $index ){
+                        @if(mostrarRespuesta&&respuestas[index]==preguntas.correct_answer){
+                            <button style="background-color: green;">{{respuestas[index]}}</button>
+                        }@else if(eliminarDosRespuesta&&respuestas[index]!=preguntas.correct_answer){
+                            <button style="background-color: red;">{{respuestas[index]}}</button>
+                        }@else {
+                            <button>{{respuestas[index]}}</button>
+                        }
+                    }
+                }
+                <div id="comodines">
+                    <button [disabled]="estadoComodines()" (click)="comodinPausarTiempo()">pausar tiempo</button>
+                    <button [disabled]="estadoComodines()" (click)="comodinEliminarDosRespuesta()">eliminar dos respuesta</button>
+                    <button [disabled]="estadoComodines()" (click)="comodinAgregarPuntos()">triplicar puntos</button>
+                    <button [disabled]="estadoComodines()" (click)="comodinMostrarRespuestaCorrecta()">mostrar respuesta con la mitad de puntos</button>
+                    <button [disabled]="estadoComodines()" (click)="comodinAgregarTiempo()">Agregar Tiempo</button>
+                </div>
+                <p>{{tiempo}}</p>
+            </div>
+   
+        </div>
+    }@else {
+        <div id="content_informacion_juego">
+            <p id="nombre-categoria">{{nombreCategoria}}</p>
+            <div>
+                <p style='font-family: "Roboto Condensed", sans-serif;'>Vas a responder a 10 preguntas de la categoria seleccionada, cada pregunta acumula cierta cantidad de puntos dependiendo de su complejidad.</p>
+                <p style='font-family: "Roboto Condensed", sans-serif;'>Acumula los puntos necesarios para tener un mejor resultado</p>
+                <strong><h1 style="font-weight:bold;">Reglas</h1></strong>
+                <ul>
+                    <ol>1. Puedes usar los comodimes como ayuda</ol>
+                    <ol>2. Solo puedes usar 3 comodimes por cada juego</ol>
+                    <ol>3. Hay un total de 5 comodimes y cada uno te ayudara de una forma diferente</ol>
+                    <ol>4. tienes un tiempo estimado de 1m:30s por cada pregunta</ol>
+                    <ol>5. se perdera la pregunta si se intenta copiar el contenido</ol>
+                    <ol>6. se perdera el proceso si se reinicia la App</ol>
+                </ul>
+            </div>
+            <div style="display: flex;justify-content: center; margin-top: 1em;">
+                <button id="boton_inf_juego" (click)="Start()">¡Comencemos!</button>
+            </div>
+        </div>
+    }
+
+</div>

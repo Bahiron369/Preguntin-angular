@@ -1,0 +1,42 @@
+<title>{{title}}</title>
+
+
+<!-- Image and text -->
+<nav id="nav_principal">
+    {{EstadoUsurio()}}
+    <div id="text_titulo">
+        <a id="titulo" routerLink="/">
+            <label (click)="RedirigirAuht('/')" style="cursor: pointer;">Preguntin </label>
+        </a>
+    </div>
+    @if(usuarioRegistrado){
+        <div>
+           <p id="titulo-menu" (click)="menuDesplegado()">Menu ☰</p>
+        </div>
+        
+    }@else{
+        @if(botones_autentificacion_activados){
+            <div id="content_botones_sesion">
+                <button [ngClass]="botones_autentificacion_activados ? 'botones_sesion' : 'botones_sesion_disabled' "  (click)="RedirigirAuht('login')">Iniciar sesion</button>
+                <button [ngClass]="botones_autentificacion_activados ? 'botones_sesion' : 'botones_sesion_disabled' " (click)="RedirigirAuht('register')">Registrarse</button>
+            </div>
+        }
+    }
+   
+</nav>
+
+ @if(usuarioRegistrado){
+    <aside [ngClass]="toggerMenu ? 'aside_oculto' : 'aside_visible'">
+        <p class="nombre-usuario">{{nombreUsuario}}</p>
+        <hr style="margin-top: 1em;">
+        <button class="boton_opciones_aside">Categorias 🏷️</button>
+        <button class="boton_opciones_aside">Informacion ℹ️</button>
+        <hr>
+        <button (click)="cerrarSesion()" class="botones_cerrar_sesion">Cerrar sesión 🚪</button>
+    </aside>
+ }
+
+ <div id="main">
+    <router-outlet></router-outlet>
+ </div>
+

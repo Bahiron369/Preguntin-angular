@@ -1,0 +1,64 @@
+<div id="Register">
+  <!--Registro-->
+  @if(!informacionValida){
+    <form [formGroup]="register" class="contenedores" (submit)="EnviarRegistro()">
+        
+        <h1 id="titulo">Registro</h1>
+
+        <!--Nombre-->
+        <input type="text"  formControlName="nombre" id="" placeholder="Name" class="datos">
+        <p class="errors">{{errorNombre}}</p>
+
+        <!--email-->
+        <input type="email" formControlName="email" id="" placeholder="Email" class="datos">
+        <p class="errors">{{errorEmail}}</p>
+
+        <!--telefono-->
+        <input type="text" formControlName="telefono" id="" placeholder="Number phone" class="datos">
+        <p class="errors">{{errorNumero}}</p>
+
+        <!--contraseña-->
+        <input type="password" formControlName="password" id="" placeholder="Password" class="datos">
+        <p class="errors">{{errorContrasena}}</p>
+
+        <!--confirmar contraseña-->
+        <input type="password" formControlName="confirPassword" id="" placeholder="Confirm password" class="datos">
+
+        <div id="content_botones">
+          <input type="submit" class="botones_registro" value="Registrase">
+          <div id="content_iniciar_sesion_route">
+            <!--Iniciar sesion-->
+            <p>¿Ya tienes una cuenta?</p>
+            <a (click)="routerInicioSesion()">Iniciar sesión</a>
+          </div>
+        </div>
+    </form>  
+  }@else{
+    @if(!codigoValido){
+
+      <!--Codigo-->
+      <div class="contenedores">
+        <p style="text-align: center;font-size: 1em;font-family: Arial, Helvetica, sans-serif;">Codigo de verificacion enviado al correo</p>
+        <form [formGroup]="formCodigo" (submit)="validarCodigo()">
+
+          <!--codigo-->
+          <input type="text" formControlName="codigo" placeholder="Codigo" id="input_codigo">
+          <p  class="errors">{{errorCodigo}}</p>
+
+          <input type="submit" id="boton_validar"  value="Validar">
+          
+        </form>
+      </div>
+
+    }@else{
+      <!--Finalizar-->
+      <div class="contenedores">
+        <p id="titulo_final">!!Cuenta creada exitosamente!!</p>
+        <button (click)="routerInicioSesion()" id="botones_final">Iniciar sesión</button>
+      </div>
+
+    }
+  }
+    
+
+</div>

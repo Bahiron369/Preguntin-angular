@@ -1,0 +1,117 @@
+@mixin boton($color-fondo,$color-fondo-segundo, $color-text,$color-text-segundo,$color-borde, $color-sombra){
+    margin: 1.5em 0;
+    padding: 10px;
+    max-width: 30%;
+    font-family: "IM Fell Double Pica SC", serif;
+    font-weight: 400;
+    border-radius: 5px;
+    color:  $color-text;
+    background-color: $color-fondo;
+    box-shadow: 0 1px 1px $color-sombra;
+    border: 1px solid transparent;
+    transition:  transform 0.2s ease, color 0.2s ease,  background-color 0.2s ease;
+
+    &:hover{
+        background-color: $color-fondo-segundo;
+        color: $color-text-segundo;
+        border: 1px solid $color-borde;
+    }
+    &:active{
+        transform: scale(0.95);
+    }
+
+}
+
+@mixin contenido(){
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    border-radius: 20px;
+    margin: 2em;
+    padding: 2em;
+    max-width: 50%;
+    z-index: 1000;
+}
+#main_pregunta{
+   display: flex;
+   height: calc(100vh - 3.9em);
+   justify-content: center;
+}
+
+/*esta sesion se centra en al informacion que aparece en el principio del juego*/
+#content_informacion_juego{
+    @include contenido;
+     
+    background-color: #e8daef;
+    text-align: left;
+    font-size: 1.2em;
+    color: #884ea0;
+}
+
+#nombre-categoria{
+    font-family: "IM Fell Double Pica SC", serif;
+    text-align: center;
+    font-size: 2em;
+    text-decoration:solid;
+    color: #6c3483;
+    font-weight:bold;
+    margin-bottom: 2em;
+}
+
+/*solo para reglas*/
+h1{
+    margin: 1em 0;
+}
+
+ul{
+    display: flex;
+    margin-left: 1em;
+    font-family: "IM Fell Double Pica SC", serif;
+    flex-direction: column;
+    gap: 0.1em;
+}
+
+#boton_inf_juego{
+    @include boton(#6c3483, #bb8fce, white,#5b2c6f,#4a235a,#633974);
+}
+
+#preguntas{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    height: calc(100vh - 3.9em);
+    min-width: 100vh;
+    overflow: hidden;
+    padding: 0.5em;
+}
+
+.pregunta{
+   width: 100%;
+    /*transform: translateX(100%);*/
+    transition: transform 0.3s ease;
+    border-radius: 1em;
+    border: 1px solid;
+    ;
+}
+
+.pregunta-entrando{
+    width: 100%;
+    background-color: #d5f5e3;
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+}
+
+.pregunta-saliendo{
+    width: 100%;
+    background-color: #5b2c6f;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+#titulo{
+    font-size: 1em;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+    color:white;
+}

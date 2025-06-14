@@ -1,0 +1,116 @@
+ [
+    {
+      "type": "multiple",
+      "difficulty": "medium",
+      "category": "Mythology",
+      "question": "The Norse god Odin has two pet crows named &quot;Huginn&quot; and &quot;Muninn&quot;.  What do their names mean?",
+      "correct_answer": "Thought &amp; Memory",
+      "incorrect_answers": [
+        "Power &amp; Peace",
+        "War &amp; Learning",
+        "Sleeping &amp; Waking"
+      ]
+    },
+    {
+      "type": "multiple",
+      "difficulty": "easy",
+      "category": "Art",
+      "question": "Who painted &quot;The Starry Night&quot;?",
+      "correct_answer": "Vincent van Gogh",
+      "incorrect_answers": [
+        "Edvard Munch",
+        "Pablo Picasso",
+        "Claude Monet"
+      ]
+    },
+    {
+      "type": "multiple",
+      "difficulty": "hard",
+      "category": "History",
+      "question": "How many women joined the United States Armed Services during World War II?",
+      "correct_answer": "350,000",
+      "incorrect_answers": [
+        "225,000",
+        "100,000",
+        "500,000"
+      ]
+    },
+    {
+      "type": "boolean",
+      "difficulty": "hard",
+      "category": "Science: Computers",
+      "question": "The IBM PC used an Intel 8008 microprocessor clocked at 4.77 MHz and 8 kilobytes of memory.",
+      "correct_answer": "False",
+      "incorrect_answers": [
+        "True"
+      ]
+    },
+    {
+      "type": "boolean",
+      "difficulty": "medium",
+      "category": "Science &amp; Nature",
+      "question": "Enthalpy is a measure of the energy that is not available for work during a thermodynamic process.",
+      "correct_answer": "False",
+      "incorrect_answers": [
+        "True"
+      ]
+    },
+    {
+      "type": "multiple",
+      "difficulty": "hard",
+      "category": "History",
+      "question": "Toussaint Louverture led a successful slave revolt in which country?",
+      "correct_answer": "Haiti",
+      "incorrect_answers": [
+        "France",
+        "Cuba",
+        "United States"
+      ]
+    },
+    {
+      "type": "multiple",
+      "difficulty": "medium",
+      "category": "Science &amp; Nature",
+      "question": "Along with Oxygen, which element is primarily responsible for the sky appearing blue?",
+      "correct_answer": "Nitrogen",
+      "incorrect_answers": [
+        "Helium",
+        "Carbon",
+        "Hydrogen"
+      ]
+    },
+    {
+      "type": "boolean",
+      "difficulty": "easy",
+      "category": "Science &amp; Nature",
+      "question": "An atom contains a nucleus.",
+      "correct_answer": "True",
+      "incorrect_answers": [
+        "False"
+      ]
+    },
+    {
+      "type": "multiple",
+      "difficulty": "hard",
+      "category": "Entertainment: Video Games",
+      "question": "In the Gamecube Version of &quot;Resident Evil&quot; what text document is open on the monitor of the computer in the Visual Data Room?",
+      "correct_answer": "A GDC Document",
+      "incorrect_answers": [
+        "Text Document on Herbs",
+        "Nothing",
+        "Document on B.O.Ws"
+      ]
+    },
+    {
+      "type": "multiple",
+      "difficulty": "medium",
+      "category": "Entertainment: Musicals &amp; Theatres",
+      "question": "Which musical has won the most Tony awards?",
+      "correct_answer": "The Producers",
+      "incorrect_answers": [
+        "Hamilton",
+        "Chicago",
+        "Phantom of the Opera"
+      ]
+    }
+  ]
