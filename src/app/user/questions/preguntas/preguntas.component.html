@@ -3,29 +3,44 @@
     @if(start){
         <div id="preguntas">
             <div class="pregunta" [ngStyle]="{'background-color' : colorFondo, 'border-color':colorBorde, 'box-shadow': '0px 1px 2.5px 1.2px' + colorBorde}">
-                <p id="titulo">{{preguntas.question}}</p>
-                @if(preguntas.type=='multiple'){
-                    @for(item of indexRespuesta; track item; let index = $index ){
-
-                        @if(mostrarRespuesta&&respuestas[index]==preguntas.correct_answer){
-                            <button style="background-color: green;">{{item}}. {{respuestas[index]}}</button>
-                        }@else if(eliminarDosRespuesta&&respuestas[index]!=preguntas.correct_answer){
-                            <button style="background-color: red;">{{item}}. {{respuestas[index]}}</button>
-                        }@else {
-                            <button>{{item}}. {{respuestas[index]}}</button>
+                <p id="titulo">{{pregunta.question}}</p>
+                <div id="content-respuestas">
+                     @if(pregunta.type=='multiple'){
+                        @for(item of indexRespuesta; track item; let index = $index){
+                            @if(preguntaContestada){ 
+                                @if(respuestas[index]==respuestaSelecionada){
+                                    @if(respuestaSelecionada==pregunta.correct_answer){
+                                        <button class="boton-respuesta-correcta">{{item}}. {{respuestas[index]}}</button>
+                                    }@else {
+                                        <button class="boton-respuesta-incorrecta">{{item}}. {{respuestas[index]}}</button>
+                                    }
+                                }@else {
+                                    <button class="boton-respuestas">{{item}}. {{respuestas[index]}}</button>
+                                }
+                            }@else {
+                                @if(mostrarRespuesta&&respuestas[index]==pregunta.correct_answer){
+                                    <button class="boton-respuesta-correcta" (click)="RespuestaSeleccionada(respuestas[index])">{{item}}. {{respuestas[index]}}</button>
+                                }@else if(eliminarDosRespuesta&&respuestasIncorrectSelect.includes(respuestas[index])){
+                                    <button class="boton-respuesta-incorrecta" (click)="RespuestaSeleccionada(respuestas[index])">{{item}}. {{respuestas[index]}}</button>
+                                }@else {
+                                    <button class="boton-respuestas" (click)="RespuestaSeleccionada(respuestas[index])">{{item}}. {{respuestas[index]}}</button>
+                                }
+                            }
+                          
+                        }
+                    }@else if (pregunta.type=="boolean") {
+                        @for(item of respuestas; track respuestas; let index = $index ){
+                            @if(mostrarRespuesta&&respuestas[index]==pregunta.correct_answer){
+                                <button class="boton-respuestas" style="background-color: green;">{{respuestas[index]}}</button>
+                            }@else if(eliminarDosRespuesta&&respuestas[index]!=pregunta.correct_answer){
+                                <button class="boton-respuestas" style="background-color: red;">{{respuestas[index]}}</button>
+                            }@else {
+                                <button>{{respuestas[index]}}</button>
+                            }
                         }
                     }
-                }@else if (preguntas.type=="boolean") {
-                      @for(item of respuestas; track respuestas; let index = $index ){
-                        @if(mostrarRespuesta&&respuestas[index]==preguntas.correct_answer){
-                            <button style="background-color: green;">{{respuestas[index]}}</button>
-                        }@else if(eliminarDosRespuesta&&respuestas[index]!=preguntas.correct_answer){
-                            <button style="background-color: red;">{{respuestas[index]}}</button>
-                        }@else {
-                            <button>{{respuestas[index]}}</button>
-                        }
-                    }
-                }
+                </div>
+               
                 <div id="comodines">
                     <button [disabled]="estadoComodines()" (click)="comodinPausarTiempo()">pausar tiempo</button>
                     <button [disabled]="estadoComodines()" (click)="comodinEliminarDosRespuesta()">eliminar dos respuesta</button>

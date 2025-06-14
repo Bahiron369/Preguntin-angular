@@ -1,4 +1,4 @@
-@mixin boton($color-fondo,$color-fondo-segundo, $color-text,$color-text-segundo,$color-borde, $color-sombra){
+@mixin botonBasico($color-fondo,$color-text){
     margin: 1.5em 0;
     padding: 10px;
     max-width: 30%;
@@ -7,6 +7,28 @@
     border-radius: 5px;
     color:  $color-text;
     background-color: $color-fondo;
+}
+
+@mixin botonRespuestas($color-sombra,$color-sombra-segundo,$color-borde,$color){
+    min-width: 46%;
+    margin: 0.7em 0.6em;
+    text-align: left;
+    border: 1px solid transparent;
+    box-shadow: 0 0 8px $color-sombra,
+                0 0 4px $color-sombra,
+                0 0 1px $color-sombra inset;
+    transition: border 0.2s ease, color 0.2s ease;
+    cursor: pointer;
+
+    &:hover{
+       border-color: $color-borde;
+       color: $color;
+    }
+}
+
+@mixin boton($color-fondo,$color-fondo-segundo, $color-text,$color-text-segundo,$color-borde, $color-sombra){
+
+    @include botonBasico($color-fondo,$color-text);
     box-shadow: 0 1px 1px $color-sombra;
     border: 1px solid transparent;
     transition:  transform 0.2s ease, color 0.2s ease,  background-color 0.2s ease;
@@ -86,12 +108,15 @@ ul{
 }
 
 .pregunta{
-   width: 100%;
+    min-width: 50%;
+    max-width: 80%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     /*transform: translateX(100%);*/
     transition: transform 0.3s ease;
     border-radius: 1em;
     border: 1px solid;
-    ;
+    padding: 1em;
 }
 
 .pregunta-entrando{
@@ -109,9 +134,32 @@ ul{
 }
 
 #titulo{
-    font-size: 1em;
+    font-size: 1.8em;
     text-align: center;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-weight: bold;
-    color:white;
+    font-family: "Sail", system-ui;
+    font-weight: 400;
+    color:black;
+}
+
+#content-respuestas{
+    display: flexbox;
+    flex-wrap: wrap;
+    gap:1em;
+    justify-content: center;
+    margin: 1.5em 0;
+}
+
+.boton-respuestas{
+    @include botonBasico(#e5e7e9,#626567);
+    @include botonRespuestas(#cacfd2, #f2f3f4 , #cacfd2, #424949)
+}
+
+.boton-respuesta-correcta{
+    @include botonBasico(#a2d9ce,#138d75);
+    @include botonRespuestas(#1abc9c, #28b463, #117a65, #0e6655)
+}
+
+.boton-respuesta-incorrecta{
+    @include botonBasico(#a93226,#f5b7b1);
+    @include botonRespuestas(#e6b0aa, #cd6155, #641e16, white)
 }
