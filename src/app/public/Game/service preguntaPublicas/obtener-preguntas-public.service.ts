@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { HttpPreguntas } from '../../Models/resultHttpPreguntas/resultHttp.model';
 import { Preguntas } from '../../Models/preguntas/Preguntas.models';
 
 @Injectable({
@@ -16,9 +15,16 @@ export class ObtenerPreguntasPublicService {
   }
 
   GetRespuestaAleatorias(pregunta:any){
-    let respuesta = pregunta.incorrect_answers;    
+    let respuesta =  pregunta.incorrect_answers;    
     const indiceAleatorio = Math.floor(Math.random() * (respuesta.length + 1));
     respuesta.splice(indiceAleatorio,0,pregunta.correct_answer);
+    return respuesta;
+  }
+
+  GetRespuestaAleatoriasHttp(pregunta:any){
+      let respuesta =  pregunta.respuestasIncorrecta;    
+    const indiceAleatorio = Math.floor(Math.random() * (respuesta.length + 1));
+    respuesta.splice(indiceAleatorio,0,pregunta.respuestasCorrecta);
     return respuesta;
   }
 }

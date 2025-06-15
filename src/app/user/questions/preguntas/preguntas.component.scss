@@ -1,7 +1,6 @@
 @mixin botonBasico($color-fondo,$color-text){
     margin: 1.5em 0;
-    padding: 10px;
-    max-width: 30%;
+    padding: 3%;
     font-family: "IM Fell Double Pica SC", serif;
     font-weight: 400;
     border-radius: 5px;
@@ -9,14 +8,29 @@
     background-color: $color-fondo;
 }
 
+@mixin estiloContentPregunta($distancia){
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+    border-radius: 1em;
+    padding: 1em;
+    background-color: #f2f4f4;
+    margin: 2.7em 3em;
+    padding: 1.8em;
+    min-height: 36em;
+    max-width: 80%;
+    transform: translateX($distancia);
+    transition: transform 0.2s ease;
+}
+
 @mixin botonRespuestas($color-sombra,$color-sombra-segundo,$color-borde,$color){
-    min-width: 46%;
+    min-width: 95%;
     margin: 0.7em 0.6em;
     text-align: left;
     border: 1px solid transparent;
     box-shadow: 0 0 8px $color-sombra,
                 0 0 4px $color-sombra,
-                0 0 1px $color-sombra inset;
+                0 0 1px $color-sombra;
     transition: border 0.2s ease, color 0.2s ease;
     cursor: pointer;
 
@@ -44,30 +58,239 @@
 
 }
 
-@mixin contenido(){
-    display: flex;
+@mixin imagenComodin(){
     position: absolute;
+    border-radius: 2%;
+    width: 70px;
+    height: 70px;
+    z-index: 1000;
+    transition: transform .4s ease;
+}
+
+@mixin botonComodin($ancho){
+    position: absolute;
+    width: $ancho;
+    overflow: hidden;
+    height: 8vh;
+    border-radius: 1em;
+    margin-top: 0.4em;
+    margin-left: 1em;
+    background-color: #bdc3c7;
+    padding-left: 1em;
+}
+
+@mixin content-comodin($max-ancho){
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    text-align: justify;
+    max-height: 20%;
+    max-width: $max-ancho;
+}
+@mixin contenido($display){
+    display: $display;
     flex-direction: column;
-    border-radius: 20px;
-    margin: 2em;
-    padding: 2em;
-    max-width: 50%;
     z-index: 1000;
 }
-#main_pregunta{
+
+@mixin contenido-derecha($min-height){
+    @include contenido(relative);
+    background-color: #f2f4f4;
+    margin: 1em;
+    min-height: $min-height;
+    min-width: 30%;
+    border-radius: 20px;
+    padding: 1em;
+}
+
+#main{
+   position: relative;
    display: flex;
-   height: calc(100vh - 3.9em);
+   flex-wrap: wrap;
+   width: 100%;
+   flex-direction: row;
    justify-content: center;
+   height: calc(100vh - 3.9em);
+   overflow: auto;
+}
+
+#columna-derecha-main{
+    @include contenido(relative);
+    left: 0;
+    height: 100%;
+    width: 30%;
+    padding: 1.5em;
+}
+
+#content-categoria{
+    @include contenido-derecha(12%);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.text-categoria{
+    color: black;
+    font-family: "IM Fell Double Pica SC", serif;
+    text-align: center;
+    font-weight: bold;
+}
+
+#comodines{
+    @include contenido-derecha(80%);
+    display: flex;
+    flex-direction: column;
+    gap: 6em;
+    padding-left: 2em;
+}
+
+//para la imagen del comodin al mostrarse y ocultarse
+.imagen-comodin{
+   @include imagenComodin();
+}
+
+.imagen-comodin:hover{
+    transform: rotate(-90deg);
+}
+
+.imagen-comodin-desactivado{
+    @include imagenComodin();
+    transform: rotate(-90deg);
+}
+
+/*boton del comodin el que ejecuta la accion*/
+.boton-comodin{
+   @include botonComodin(0);
+   transition: width 0.4s ease;
+
+}
+
+.boton-comodin-desactivado{
+    @include botonComodin(100%);
+
+}
+
+.content-boton-comodin:hover .boton-comodin{
+    width: 100%;
+}
+
+//contenedor principal del comodin
+
+.content-boton-comodin{
+    @include content-comodin(0);
+    transition: max-width 0.4s ease;
+}
+
+.content-boton-comodin:hover{
+    max-width: 90%;
+}
+.content-boton-comodin-desactivado{
+    @include content-comodin(90%);
+}
+
+#main_pregunta{
+    @include contenido('relative');
+    width: 50%;
+    justify-content: center;
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.pregunta{
+    @include estiloContentPregunta(0);
+}
+
+.pregunta-siguiente{
+    @include estiloContentPregunta(120%);
+}
+
+#titulo{
+    font-size: 1.7em;
+    text-align: center;
+    font-family: "Sail", system-ui;
+    font-weight: 400;
+    color:black;
+    margin-bottom: 1.7em;
+}
+
+.boton-respuestas{
+    @include botonBasico(#fdfefe,#626567);
+    @include botonRespuestas(#cacfd2, #f2f3f4 , #cacfd2, #979a9a)
+}
+
+.boton-respuesta-correcta{
+    @include botonBasico(#fdfefe,#138d75);
+    @include botonRespuestas(#1abc9c, #28b463, #117a65, #0e6655)
+}
+
+.boton-respuesta-correcta-default{
+     @include botonBasico(#a2d9ce,#138d75);
+    @include botonRespuestas(#1abc9c, #28b463, #117a65, #0e6655)
+}
+.boton-respuesta-incorrecta{
+    @include botonBasico(#fdfefe,#e74c3c);
+    @include botonRespuestas(#e6b0aa, #cd6155, #e74c3c, red)
+}
+
+#content-footer-pregunta{
+    margin-top: 2em;
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+}
+.text-footer{
+    font-size: 1.1em;
+    font-family: "Roboto Slab", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+#numero-pregunta{
+    position: absolute;
+    margin-left: 47%;
+    font-size: 1em;
+    font-weight: bold;
+    bottom: 0;
+    margin-bottom: 1em;
+     transform: translate(-50%, -50%);
+}
+
+#content-tiempo{
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    margin-right: 2em;
+    width: 10%;
+}
+
+#tiempo{
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    background-color: #f2f4f4;
+    text-align: center;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    font-size: 2.8em;
+    font-family: "Orbitron", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
 }
 
 /*esta sesion se centra en al informacion que aparece en el principio del juego*/
 #content_informacion_juego{
-    @include contenido;
-     
+    @include contenido(flex);
+    margin-left: 1em;
     background-color: #e8daef;
     text-align: left;
     font-size: 1.2em;
     color: #884ea0;
+    border-radius: 20px;
+    margin: 2em;
+    padding: 2em;
+    max-width: 50%;
 }
 
 #nombre-categoria{
@@ -95,71 +318,4 @@ ul{
 
 #boton_inf_juego{
     @include boton(#6c3483, #bb8fce, white,#5b2c6f,#4a235a,#633974);
-}
-
-#preguntas{
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    height: calc(100vh - 3.9em);
-    min-width: 100vh;
-    overflow: hidden;
-    padding: 0.5em;
-}
-
-.pregunta{
-    min-width: 50%;
-    max-width: 80%;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    /*transform: translateX(100%);*/
-    transition: transform 0.3s ease;
-    border-radius: 1em;
-    border: 1px solid;
-    padding: 1em;
-}
-
-.pregunta-entrando{
-    width: 100%;
-    background-color: #d5f5e3;
-    transform: translateX(0);
-    transition: transform 0.3s ease;
-}
-
-.pregunta-saliendo{
-    width: 100%;
-    background-color: #5b2c6f;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-}
-
-#titulo{
-    font-size: 1.8em;
-    text-align: center;
-    font-family: "Sail", system-ui;
-    font-weight: 400;
-    color:black;
-}
-
-#content-respuestas{
-    display: flexbox;
-    flex-wrap: wrap;
-    gap:1em;
-    justify-content: center;
-    margin: 1.5em 0;
-}
-
-.boton-respuestas{
-    @include botonBasico(#e5e7e9,#626567);
-    @include botonRespuestas(#cacfd2, #f2f3f4 , #cacfd2, #424949)
-}
-
-.boton-respuesta-correcta{
-    @include botonBasico(#a2d9ce,#138d75);
-    @include botonRespuestas(#1abc9c, #28b463, #117a65, #0e6655)
-}
-
-.boton-respuesta-incorrecta{
-    @include botonBasico(#a93226,#f5b7b1);
-    @include botonRespuestas(#e6b0aa, #cd6155, #641e16, white)
 }

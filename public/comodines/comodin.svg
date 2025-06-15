@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!-- Degradado radial -->
+  <defs>
+    <radialGradient id="grad1" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" style="stop-color:#9b59b6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6c2bd9;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+
+  <!-- Fondo redondeado con degradado -->
+  <rect x="0" y="0" width="512" height="512" rx="60" ry="60" fill="url(#grad1)" />
+
+  <!-- Círculo central -->
+  <circle cx="256" cy="256" r="120" fill="#ecb3ff" stroke="#8e44ad" stroke-width="10" />
+
+  <!-- Estrella central -->
+  <path d="M256,196 L270,238 L316,238 L278,264 L292,306 L256,280 L220,306 L234,264 L196,238 L242,238 Z"
+        fill="black" />
+
+  <!-- Pequeñas estrellas decorativas -->
+  <circle cx="80" cy="80" r="10" fill="#ffffff" />
+  <circle cx="440" cy="100" r="6" fill="#ffffff" />
+  <circle cx="420" cy="400" r="8" fill="#ffffff" />
+  <circle cx="100" cy="420" r="7" fill="#ffffff" />
+</svg>

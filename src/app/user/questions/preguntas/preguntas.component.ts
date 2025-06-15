@@ -11,29 +11,28 @@ import { ObtenerPreguntasPublicService } from '../../../public/Game/service preg
 })
 export class PreguntasComponent implements OnInit{
 
-  public constructor(private router:ActivatedRoute, private respuestaService:ObtenerPreguntasPublicService){
+  public constructor(private router:ActivatedRoute, private preguntasService:PreguntasService, private respuestaService:ObtenerPreguntasPublicService){
     router.paramMap.subscribe({
       next: (params)=>{
         this.nombreCategoria = params.get('categoria');
       },
       error: (errors)=>{
         console.log(errors);
+        console.log("hoa")
       }
     })
   }
 
   ngOnInit(): void {
-    /*
-    this.preguntasServicio.GetPreguntas(this.nombreCategoria).subscribe({
-      next: (result)=>{
+    this.preguntasService.GetPreguntas(this.nombreCategoria).subscribe({
+       next: (result)=>{
         this.preguntas = result;
         console.log(result)
       },
       error: (errors)=>{
         console.log(errors);
       }
-    });*/
-     
+    });
   } 
 
   Start(){
@@ -47,8 +46,6 @@ export class PreguntasComponent implements OnInit{
 
       if(!this.pausarTiempo)
         this.tiempo--;
-      else
-        clearInterval(setIntervalo);
 
       if(this.tiempo<=0 || this.preguntaContestada){
         clearInterval(setIntervalo);
@@ -60,61 +57,89 @@ export class PreguntasComponent implements OnInit{
 
   tiempoEsperaMensaje(){
 
-    let tiempoEspera = 3; //esperar 3 segundos antes de  la siquiente pregunta
+    this.tiempoEspera = 3; //esperar 2 segundos antes de  la siquiente pregunta
     
     let setIntervaloEspera = setInterval(()=>{
-      tiempoEspera--;
-      console.log("hola")
-      if(tiempoEspera<=0){
+       this.tiempoEspera --;
+
+      if( this.tiempoEspera <=0){
         clearInterval(setIntervaloEspera);
+        this.siguiente_pregunta=true;
         this.PreguntaSiguiente();
+        this.tiempo=90;
       }
 
     },1000)
   }
 
-  comodinAgregarTiempo(){
-    if(this.comodinesUsados<=3){
+  selectComodin(comodin:string){
+
+    if(!this.estadoComodines()){
+
+      if(comodin=="Pausar Tiempo"&& !this.listComodimesUsados.includes(comodin)){
+        this.comodinPausarTiempo(comodin);
+      }else if(comodin=="50 / 50"&& !this.listComodimesUsados.includes(comodin)){
+        this.comodinEliminarDosRespuesta(comodin);
+      }else if(comodin=="Puntos x3"&& !this.listComodimesUsados.includes(comodin)){
+        this.comodinAgregarPuntos(comodin);
+      }else if(comodin=="Respuesta mitad puntos"&& !this.listComodimesUsados.includes(comodin)){
+        this.comodinMostrarRespuestaCorrecta(comodin);
+      }else if(comodin=="Tiempo x2"&& !this.listComodimesUsados.includes(comodin)){
+        this.comodinAgregarTiempo(comodin);
+      }
+     
+    }
+  }
+
+  comodinAgregarTiempo(comodin:string){
+    if(this.comodinesUsados<3){
       this.agregarTiempo=true;
       this.tiempo += 90;
       this.comodinesUsados++;
       this.comodinUsadoPregunta=true;
+      this.listComodimesUsados.push(comodin);
     }
   }
 
-  comodinPausarTiempo(){
-     if(this.comodinesUsados<=3){
+  comodinPausarTiempo(comodin:string){
+     if(this.comodinesUsados<3){
         this.pausarTiempo=true;
         this.comodinesUsados++;
         this.comodinUsadoPregunta=true;
+        this.listComodimesUsados.push(comodin);
       }
   }
 
-  comodinAgregarPuntos(){
-    if(this.comodinesUsados<=3){
+  comodinAgregarPuntos(comodin:string){
+    if(this.comodinesUsados<3){
       this.agregarPuntosPregunta = true;
       this.pregunta.puntoPregunta*= 3;
       this.comodinesUsados++; 
       this.comodinUsadoPregunta=true;
+      this.listComodimesUsados.push(comodin);
     }
 
   }
 
-  comodinMostrarRespuestaCorrecta(){
-    if(this.comodinesUsados<=3){
+  comodinMostrarRespuestaCorrecta(comodin:string){
+    if(this.comodinesUsados<3){
         this.mostrarRespuesta=true;
         this.pregunta.puntoPregunta/= 2;
         this.comodinesUsados++;
         this.comodinUsadoPregunta=true;
+        this.listComodimesUsados.push(comodin);
       }
     
   }
 
-  comodinEliminarDosRespuesta(){
+  comodinEliminarDosRespuesta(comodin:string){
     if(this.comodinesUsados<=3){
       this.eliminarDosRespuesta=true;
       this.comodinesUsados++;
       this.comodinUsadoPregunta=true;
+      this.respuestasIncorrectSelect = this.pregunta.respuestasIncorrecta.filter((p:any)=>p!=this.pregunta.respuestasCorrecta);
+      this.respuestasIncorrectSelect.pop();
+      this.listComodimesUsados.push(comodin);
     }
   }
 
@@ -124,50 +149,48 @@ export class PreguntasComponent implements OnInit{
   }
 
   PreguntaSiguiente(){
-    this.colorPregunta();
     this.restablecerValores();
-    this.tiempoPregunta();
-
   }
 
   restablecerValores(){
+    this.pregunta = this.preguntas[this.contadorPreguntas];
+    this.contadorPreguntas++;
+    console.log(this.pregunta);
     this.comodinUsadoPregunta=false;
-    this.siguiente_pregunta = false;
+    this.siguiente_pregunta = true;
     this.preguntaContestada=false;
-    this.respuestas = this.respuestaService.GetRespuestaAleatorias(this.pregunta);
-    this.respuestasIncorrectSelect = this.pregunta.incorrect_answers.slice(-2);
-    this.tiempo=90;
+    this.pregunta.respuestasIncorrecta = this.pregunta.respuestasIncorrecta.filter((p)=>p != this.pregunta.respuestasCorrecta);
+    this.respuestas = this.respuestaService.GetRespuestaAleatoriasHttp(this.pregunta);
+    this.respuestasIncorrectSelect = this.pregunta.respuestasIncorrecta.slice(-2);
     this.respuestaSelecionada="";
+    this.mostrarRespuesta=false;
+    this.eliminarDosRespuesta=false;
+    this.pausarTiempo=false;
+    this.tiempoPregunta();
     
   }
 
   RespuestaSeleccionada(nombre:string){
+    //acumula puntos
+    this.puntosAcumulados += nombre == this.pregunta.respuestasCorrecta ? this.pregunta.puntoPregunta :  this.puntosAcumulados >0 ? -75 : 0;
     this.respuestaSelecionada = nombre;
     this.preguntaContestada=true;
-    this.tiempoEsperaMensaje()
   }
 
-  colorPregunta(){
-    this.colorFondo = this.pregunta.difficulty=='easy' ? '#e8f8f5' : this.pregunta.difficulty=='medium' ? '#fef9e7' : '#f5b7b1'
-    this.colorBorde = this.pregunta.difficulty=='easy' ? '#16a085' : this.pregunta.difficulty=='medium' ? '#f1c40f' : '#b03a2e'
-  }
-
-
-  nombreCategoria:any;
-  pregunta =  {
-      "type": "multiple",
-      "difficulty": "easy",
-      "category": "Art",
-      "puntoPregunta":200,
-      "tiempoRespuesta": 5,
-      "question": " What color is produced by mixing black and white?",
-      "correct_answer": "Grey",
-      "incorrect_answers": [
-        "Black",
-        "Brown",
-        "White"
-      ]
-    }
+  public nombreCategoria:any;
+  public preguntas:any[] = [];
+  public contadorPreguntas:number=0;
+  public pregunta = {
+    dificultad: "",
+    nombre: "",
+    nombreCategoria: "",
+    puntoPregunta: 0,
+    respuestasCorrecta: "",
+    respuestasIncorrecta: 
+    ['', '', ''],
+    tiempoRespuesta: "",
+    tipo: ""
+  };
 
   //comodines ayudan al jugador
   //1. pausar timepo
@@ -183,12 +206,14 @@ export class PreguntasComponent implements OnInit{
   public agregarTiempo:boolean = false;
   public comodinesUsados:number =0;
   public comodinUsadoPregunta:boolean = false;
+  public listComodimesUsados:string[] = [];
 
   //puntos del jugador
   public puntosAcumulados:number=0;
 
   //tiempo por pregunta en segundos
   public tiempo:number = 90;
+  public tiempoEspera:number=0;
 
   //iniciando juego
   public start:boolean=false;
@@ -201,7 +226,8 @@ export class PreguntasComponent implements OnInit{
   //datos del juego 
   public respuestas:string[] = [];
   public indexRespuesta:string[] = ['A','B','C','D']
-  public respuestasIncorrectSelect:string[] = this.pregunta.incorrect_answers.slice(-2);
+  public respuestasIncorrectSelect:string[] = [] ;
+  public comodines: string[] = ["Pausar Tiempo","50 / 50","Puntos x3","Respuesta mitad puntos","Tiempo x2"];
   ///////////////////////////////
   ///estilos////////////
   public colorFondo: string = "";

@@ -1,77 +1,110 @@
-<div id="main_pregunta">
-
+<div id="main">
     @if(start){
-        <div id="preguntas">
-            <div class="pregunta" [ngStyle]="{'background-color' : colorFondo, 'border-color':colorBorde, 'box-shadow': '0px 1px 2.5px 1.2px' + colorBorde}">
-                <p id="titulo">{{pregunta.question}}</p>
-                <div id="content-respuestas">
-                     @if(pregunta.type=='multiple'){
-                        @for(item of indexRespuesta; track item; let index = $index){
-                            @if(preguntaContestada){ 
-                                @if(respuestas[index]==respuestaSelecionada){
-                                    @if(respuestaSelecionada==pregunta.correct_answer){
-                                        <button class="boton-respuesta-correcta">{{item}}. {{respuestas[index]}}</button>
-                                    }@else {
-                                        <button class="boton-respuesta-incorrecta">{{item}}. {{respuestas[index]}}</button>
+       <div id="columna-derecha-main">
+            <div id="content-categoria">
+                <p class="text-categoria" style="font-size: 1.1em;">{{pregunta.nombreCategoria | uppercase}}</p>
+                <p class="text-categoria" style="font-size: 1em;">Puntos: {{puntosAcumulados}} ⭐</p>
+            </div>
+            <div id="comodines">
+                @for(comodin of comodines; track comodin){
+                    <div class="content-boton-comodin" [ngClass]="!listComodimesUsados.includes(comodin) ? 'content-boton-comodin':'content-boton-comodin-desactivado'"  alt="comodin" (click)="selectComodin(comodin)">
+                        <img src="comodines/comodin.svg" [ngClass]="!listComodimesUsados.includes(comodin) ? 'imagen-comodin':'imagen-comodin-desactivado'"  alt="comodin">
+                        <button class="boton-comodin" [ngClass]="!listComodimesUsados.includes(comodin) ? 'boton-comodin':'boton-comodin-desactivado'"  alt="comodin">{{comodin}}</button>
+                    </div>
+                }
+            </div>
+       </div>
+        <div id="main_pregunta">
+                <div id="preguntas">
+                    <div [ngClass]="tiempoEspera==1 ? 'pregunta-siguiente' : 'pregunta'"  [ngStyle]="{'gap' : pregunta.tipo=='boolean' ? '1em' : ''}">
+                        <p id="titulo">{{pregunta.nombre}}</p>
+                            @if(pregunta.tipo=='multiple'){
+                                @for(item of indexRespuesta; track item; let index = $index){
+                                    @if(preguntaContestada||tiempo<=0){ 
+                                        @if(respuestas[index]==respuestaSelecionada){
+                                            @if(respuestaSelecionada==pregunta.respuestasCorrecta){
+                                                <button class="boton-respuesta-correcta">{{item}}. {{respuestas[index]}}</button>
+                                            }@else {
+                                                <button class="boton-respuesta-incorrecta">{{item}}. {{respuestas[index]}}</button>
+                                            }
+                                        }@else {
+                                            @if(respuestaSelecionada!=pregunta.respuestasCorrecta&&respuestas[index]==pregunta.respuestasCorrecta){
+                                                <button class="boton-respuesta-correcta-default">{{item}}. {{respuestas[index]}}</button>
+                                            }@else {
+                                                <button class="boton-respuestas">{{item}}. {{respuestas[index]}}</button>
+                                            }
+                                        }
+                                    }@else{
+                                        @if(mostrarRespuesta&&respuestas[index]==pregunta.respuestasCorrecta){
+                                            <button class="boton-respuesta-correcta" (click)="RespuestaSeleccionada(respuestas[index])">{{item}}. {{respuestas[index]}}</button>
+                                        }@else if(eliminarDosRespuesta&&respuestasIncorrectSelect.includes(respuestas[index])){
+                                            <button class="boton-respuesta-incorrecta" (click)="RespuestaSeleccionada(respuestas[index])">{{item}}. {{respuestas[index]}}</button>
+                                        }@else {
+                                            <button class="boton-respuestas" (click)="RespuestaSeleccionada(respuestas[index])">{{item}}. {{respuestas[index]}}</button>
+                                        }
                                     }
-                                }@else {
-                                    <button class="boton-respuestas">{{item}}. {{respuestas[index]}}</button>
                                 }
-                            }@else {
-                                @if(mostrarRespuesta&&respuestas[index]==pregunta.correct_answer){
-                                    <button class="boton-respuesta-correcta" (click)="RespuestaSeleccionada(respuestas[index])">{{item}}. {{respuestas[index]}}</button>
-                                }@else if(eliminarDosRespuesta&&respuestasIncorrectSelect.includes(respuestas[index])){
-                                    <button class="boton-respuesta-incorrecta" (click)="RespuestaSeleccionada(respuestas[index])">{{item}}. {{respuestas[index]}}</button>
-                                }@else {
-                                    <button class="boton-respuestas" (click)="RespuestaSeleccionada(respuestas[index])">{{item}}. {{respuestas[index]}}</button>
+                            }@else if (pregunta.tipo=="boolean") {
+                                @for(item of respuestas; track respuestas; let index = $index ){
+                                      @if(preguntaContestada||tiempo<=0){ 
+                                        @if(respuestas[index]==respuestaSelecionada){
+                                            @if(respuestaSelecionada==pregunta.respuestasCorrecta){
+                                                <button class="boton-respuesta-correcta">{{item}}</button>
+                                            }@else {
+                                                <button class="boton-respuesta-incorrecta">{{item}}</button>
+                                            }
+                                        }@else {
+                                            @if(respuestaSelecionada!=pregunta.respuestasCorrecta&&respuestas[index]==pregunta.respuestasCorrecta){
+                                                <button class="boton-respuesta-correcta-default">{{item}}</button>
+                                            }@else {
+                                                <button class="boton-respuestas">{{item}}</button>
+                                            }
+                                        }
+                                    }@else{
+                                        @if(mostrarRespuesta&&respuestas[index]==pregunta.respuestasCorrecta){
+                                            <button class="boton-respuesta-correcta" (click)="RespuestaSeleccionada(respuestas[index])">{{item}}</button>
+                                        }@else if(eliminarDosRespuesta&&respuestas[index]!=pregunta.respuestasCorrecta){
+                                            <button class="boton-respuesta-incorrecta" (click)="RespuestaSeleccionada(respuestas[index])">{{item}}</button>
+                                        }@else {
+                                            <button class="boton-respuestas" (click)="RespuestaSeleccionada(respuestas[index])">{{item}}</button>
+                                        }
+                                    }
                                 }
                             }
-                          
-                        }
-                    }@else if (pregunta.type=="boolean") {
-                        @for(item of respuestas; track respuestas; let index = $index ){
-                            @if(mostrarRespuesta&&respuestas[index]==pregunta.correct_answer){
-                                <button class="boton-respuestas" style="background-color: green;">{{respuestas[index]}}</button>
-                            }@else if(eliminarDosRespuesta&&respuestas[index]!=pregunta.correct_answer){
-                                <button class="boton-respuestas" style="background-color: red;">{{respuestas[index]}}</button>
-                            }@else {
-                                <button>{{respuestas[index]}}</button>
-                            }
-                        }
-                    }
+                        <div id="content-footer-pregunta">
+                            <p class="text-footer">Puntos: {{pregunta.puntoPregunta}} ⭐</p>
+                            <p class="text-footer">{{pregunta.dificultad | uppercase}}</p>
+                        </div>
+                        <div id="numero-pregunta">
+                            <p >{{contadorPreguntas}}</p>
+                        </div>
+                    </div>
                 </div>
-               
-                <div id="comodines">
-                    <button [disabled]="estadoComodines()" (click)="comodinPausarTiempo()">pausar tiempo</button>
-                    <button [disabled]="estadoComodines()" (click)="comodinEliminarDosRespuesta()">eliminar dos respuesta</button>
-                    <button [disabled]="estadoComodines()" (click)="comodinAgregarPuntos()">triplicar puntos</button>
-                    <button [disabled]="estadoComodines()" (click)="comodinMostrarRespuestaCorrecta()">mostrar respuesta con la mitad de puntos</button>
-                    <button [disabled]="estadoComodines()" (click)="comodinAgregarTiempo()">Agregar Tiempo</button>
-                </div>
+        </div>
+        <div id="content-tiempo">
+            <div id="tiempo">
                 <p>{{tiempo}}</p>
             </div>
-   
         </div>
     }@else {
         <div id="content_informacion_juego">
-            <p id="nombre-categoria">{{nombreCategoria}}</p>
-            <div>
-                <p style='font-family: "Roboto Condensed", sans-serif;'>Vas a responder a 10 preguntas de la categoria seleccionada, cada pregunta acumula cierta cantidad de puntos dependiendo de su complejidad.</p>
-                <p style='font-family: "Roboto Condensed", sans-serif;'>Acumula los puntos necesarios para tener un mejor resultado</p>
-                <strong><h1 style="font-weight:bold;">Reglas</h1></strong>
-                <ul>
-                    <ol>1. Puedes usar los comodimes como ayuda</ol>
-                    <ol>2. Solo puedes usar 3 comodimes por cada juego</ol>
-                    <ol>3. Hay un total de 5 comodimes y cada uno te ayudara de una forma diferente</ol>
-                    <ol>4. tienes un tiempo estimado de 1m:30s por cada pregunta</ol>
-                    <ol>5. se perdera la pregunta si se intenta copiar el contenido</ol>
-                    <ol>6. se perdera el proceso si se reinicia la App</ol>
-                </ul>
-            </div>
-            <div style="display: flex;justify-content: center; margin-top: 1em;">
-                <button id="boton_inf_juego" (click)="Start()">¡Comencemos!</button>
-            </div>
+                <p id="nombre-categoria">{{nombreCategoria}}</p>
+                <div>
+                    <p style='font-family: "Roboto Condensed", sans-serif;'>Vas a responder a 10 preguntas de la categoria seleccionada, cada pregunta acumula cierta cantidad de puntos dependiendo de su complejidad.</p>
+                    <p style='font-family: "Roboto Condensed", sans-serif;'>Acumula los puntos necesarios para tener un mejor resultado</p>
+                    <strong><h1 style="font-weight:bold;">Reglas</h1></strong>
+                    <ul>
+                        <ol>1. Puedes usar los comodimes como ayuda</ol>
+                        <ol>2. Solo puedes usar 3 comodimes por cada juego</ol>
+                        <ol>3. Hay un total de 5 comodimes y cada uno te ayudara de una forma diferente</ol>
+                        <ol>4. tienes un tiempo estimado de 1m:30s por cada pregunta</ol>
+                        <ol>5. se perdera la pregunta si se intenta copiar el contenido</ol>
+                        <ol>6. se perdera el proceso si se reinicia la App</ol>
+                    </ul>
+                </div>
+                <div style="display: flex;justify-content: center; margin-top: 1em;">
+                    <button id="boton_inf_juego" (click)="Start()">¡Comencemos!</button>
+                </div>
         </div>
     }
-
 </div>

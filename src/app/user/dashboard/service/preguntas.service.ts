@@ -14,7 +14,7 @@ export class PreguntasService {
 
   GetPreguntas(nombreCategoria:string):Observable<any>{
     let headers = this.headers;
-    return this.http.get(`http://localhost:5075/Game/player/categoria/${nombreCategoria}`,{headers}).pipe(map((preguntas:any)=>preguntas.map((p:any)=> new Preguntas(p))));
+    return this.http.get<any[]>(`http://localhost:5075/Game/player/categoria/${nombreCategoria}`,{headers});
   }
 
 
