@@ -1,22 +1,24 @@
-<div id="main">
+<div id="main" [ngStyle]="{'overflow': finish ? 'auto':'auto'}">
     @if(start){
-       <div id="columna-derecha-main">
-            <div id="content-categoria">
+       <div [ngClass]="finish ? 'columna-derecha-main-finish': 'columna-derecha-main'">
+            <div [ngClass]="finish ? 'content-categoria-finish': 'content-categoria'">
                 <p class="text-categoria" style="font-size: 1.1em;">{{pregunta.nombreCategoria | uppercase}}</p>
                 <p class="text-categoria" style="font-size: 1em;">Puntos: {{puntosAcumulados}} ⭐</p>
             </div>
-            <div id="comodines">
-                @for(comodin of comodines; track comodin){
-                    <div class="content-boton-comodin" [ngClass]="!listComodimesUsados.includes(comodin) ? 'content-boton-comodin':'content-boton-comodin-desactivado'"  alt="comodin" (click)="selectComodin(comodin)">
-                        <img src="comodines/comodin.svg" [ngClass]="!listComodimesUsados.includes(comodin) ? 'imagen-comodin':'imagen-comodin-desactivado'"  alt="comodin">
-                        <button class="boton-comodin" [ngClass]="!listComodimesUsados.includes(comodin) ? 'boton-comodin':'boton-comodin-desactivado'"  alt="comodin">{{comodin}}</button>
-                    </div>
-                }
-            </div>
+            @if(!finish){
+                <div class="comodines">
+                    @for(comodin of comodines; track comodin){
+                        <div class="content-boton-comodin" [ngClass]="!listComodimesUsados.includes(comodin) ? 'content-boton-comodin':'content-boton-comodin-desactivado'"  alt="comodin" (click)="selectComodin(comodin)">
+                            <img src="comodines/comodin.svg" [ngClass]="!listComodimesUsados.includes(comodin) ? 'imagen-comodin':'imagen-comodin-desactivado'"  alt="comodin">
+                            <button class="boton-comodin" [ngClass]="!listComodimesUsados.includes(comodin) ? 'boton-comodin':'boton-comodin-desactivado'"  alt="comodin">{{comodin}}</button>
+                        </div>
+                    }
+                </div>
+            }
        </div>
-        <div id="main_pregunta">
-                <div id="preguntas">
-                    <div [ngClass]="tiempoEspera==1 ? 'pregunta-siguiente' : 'pregunta'"  [ngStyle]="{'gap' : pregunta.tipo=='boolean' ? '1em' : ''}">
+        <div class="main_pregunta-finalizar-juego">
+                <div id="preguntas" style="overflow: hidden;" >
+                    <div [ngClass]="tiempoEspera==1 ? 'pregunta-siguiente' : finish ? 'pregunta-siguiente' : 'pregunta'"  [ngStyle]="{'gap' : pregunta.tipo=='boolean' ? '1em' : ''}">
                         <p id="titulo">{{pregunta.nombre}}</p>
                             @if(pregunta.tipo=='multiple'){
                                 @for(item of indexRespuesta; track item; let index = $index){
@@ -81,8 +83,8 @@
                     </div>
                 </div>
         </div>
-        <div id="content-tiempo">
-            <div id="tiempo">
+        <div class="content-tiempo">
+            <div [ngClass]="finish || tiempoEspera==1 ? 'tiempo-finish' :'tiempo'">
                 <p>{{tiempo}}</p>
             </div>
         </div>

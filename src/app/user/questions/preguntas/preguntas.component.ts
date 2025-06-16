@@ -15,10 +15,10 @@ export class PreguntasComponent implements OnInit{
     router.paramMap.subscribe({
       next: (params)=>{
         this.nombreCategoria = params.get('categoria');
+        this.idCategoria = params.get('idCategoria');
       },
       error: (errors)=>{
         console.log(errors);
-        console.log("hoa")
       }
     })
   }
@@ -27,7 +27,6 @@ export class PreguntasComponent implements OnInit{
     this.preguntasService.GetPreguntas(this.nombreCategoria).subscribe({
        next: (result)=>{
         this.preguntas = result;
-        console.log(result)
       },
       error: (errors)=>{
         console.log(errors);
@@ -41,13 +40,17 @@ export class PreguntasComponent implements OnInit{
   }
 
   tiempoPregunta(){
-
+ if(this.contadorPreguntas>10){
+          this.finish=true;
+          console.log("hola")
+        }
     let setIntervalo = setInterval(()=>{
 
       if(!this.pausarTiempo)
         this.tiempo--;
 
       if(this.tiempo<=0 || this.preguntaContestada){
+       
         clearInterval(setIntervalo);
         this.tiempoEsperaMensaje();
       }
@@ -150,24 +153,42 @@ export class PreguntasComponent implements OnInit{
 
   PreguntaSiguiente(){
     this.restablecerValores();
+    
   }
 
   restablecerValores(){
-    this.pregunta = this.preguntas[this.contadorPreguntas];
-    this.contadorPreguntas++;
-    console.log(this.pregunta);
-    this.comodinUsadoPregunta=false;
-    this.siguiente_pregunta = true;
-    this.preguntaContestada=false;
-    this.pregunta.respuestasIncorrecta = this.pregunta.respuestasIncorrecta.filter((p)=>p != this.pregunta.respuestasCorrecta);
-    this.respuestas = this.respuestaService.GetRespuestaAleatoriasHttp(this.pregunta);
-    this.respuestasIncorrectSelect = this.pregunta.respuestasIncorrecta.slice(-2);
-    this.respuestaSelecionada="";
-    this.mostrarRespuesta=false;
-    this.eliminarDosRespuesta=false;
-    this.pausarTiempo=false;
-    this.tiempoPregunta();
-    
+    if(this.contadorPreguntas<10){
+
+      this.pregunta = this.preguntas[this.contadorPreguntas];
+      this.contadorPreguntas++;
+      this.comodinUsadoPregunta=false;
+      this.siguiente_pregunta = true;
+      this.preguntaContestada=false;
+      this.pregunta.respuestasIncorrecta = this.pregunta.respuestasIncorrecta.filter((p)=>p != this.pregunta.respuestasCorrecta);
+      this.respuestas = this.respuestaService.GetRespuestaAleatoriasHttp(this.pregunta);
+      this.respuestasIncorrectSelect = this.pregunta.respuestasIncorrecta.slice(-2);
+      this.respuestaSelecionada="";
+      this.mostrarRespuesta=false;
+      this.eliminarDosRespuesta=false;
+      this.pausarTiempo=false;
+      this.finish=false;
+      this.tiempoPregunta();
+
+    }else{
+      this.contadorPreguntas=11;
+      this.finish=true;
+      console.log("hola");
+      this.preguntasService.setPuntosCategoria(this.idCategoria,this.puntosAcumulados).subscribe({
+         next:(mensaje)=>{
+          console.log(mensaje);
+         },
+          error: (errors)=>{
+            console.log(errors);
+          }
+      });
+    }
+      
+  
   }
 
   RespuestaSeleccionada(nombre:string){
@@ -178,8 +199,9 @@ export class PreguntasComponent implements OnInit{
   }
 
   public nombreCategoria:any;
+  public idCategoria:any;
   public preguntas:any[] = [];
-  public contadorPreguntas:number=0;
+  public contadorPreguntas:number=8;
   public pregunta = {
     dificultad: "",
     nombre: "",
@@ -217,6 +239,7 @@ export class PreguntasComponent implements OnInit{
 
   //iniciando juego
   public start:boolean=false;
+  public finish:boolean=false;
 
   public siguiente_pregunta:boolean=true;
 
@@ -228,6 +251,7 @@ export class PreguntasComponent implements OnInit{
   public indexRespuesta:string[] = ['A','B','C','D']
   public respuestasIncorrectSelect:string[] = [] ;
   public comodines: string[] = ["Pausar Tiempo","50 / 50","Puntos x3","Respuesta mitad puntos","Tiempo x2"];
+
   ///////////////////////////////
   ///estilos////////////
   public colorFondo: string = "";

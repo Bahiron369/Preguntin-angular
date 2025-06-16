@@ -3,7 +3,7 @@
 </div>
 <div id="content_main">
     @for(item of categorias; track categorias){
-        <div class="Categorias" (click)="routerPreguntas(item.nombre)">
+        <div class="Categorias" (click)="routerPreguntas(item.nombre,item.idCategoria)">
             <div class="content_img_categoria">
                 <img height="200px" width="250px" style="border-radius: 8px;" src="categoria.svg" alt="Imagen">
             </div>

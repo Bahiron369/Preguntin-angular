@@ -17,7 +17,7 @@ const routes: Routes = [
   {path:'auth/login', component:LoginComponent, canActivate: [blockAuthGuard]},
   {path:'auth/login/forget', component:ForgetPasswordComponent, canActivate: [blockAuthGuard]},
   {path:'dashboard', component:DashboardComponent, canActivate: [authGuard]},
-  {path:'dashboard/preguntas/:categoria', component:PreguntasComponent, canActivate: [authGuard]}
+  {path:'dashboard/preguntas/:categoria/:idCategoria', component:PreguntasComponent, canActivate: [authGuard]}
 
 ];
 

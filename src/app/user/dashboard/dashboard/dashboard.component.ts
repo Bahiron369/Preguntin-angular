@@ -37,8 +37,8 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  routerPreguntas(nombreCategoria:string){
-    this.router.navigate([`dashboard/preguntas`,nombreCategoria]);
+  routerPreguntas(nombreCategoria:string,idCategoria:number){
+    this.router.navigate([`dashboard/preguntas`,nombreCategoria,idCategoria]);
   }
 
   public categorias:any;

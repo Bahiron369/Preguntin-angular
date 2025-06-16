@@ -5,16 +5,20 @@ import { RouterModule, Routes } from '@angular/router';
 import { authGuard } from '../Auth/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
 import { PreguntasComponent } from './questions/preguntas/preguntas.component';
+import { ComodinesComponent } from './questions/comodines/comodines/comodines.component';
+import { PuntajeGlobalCategoriaComponent } from './questions/punta_global_categoria/puntaje-global-categoria/puntaje-global-categoria.component';
 
 const router: Routes = [
     {path:'dashboard',component:DashboardComponent, canActivate: [authGuard]},
-    {path:'dashboard/preguntas/:categoria', component:PreguntasComponent, canActivate: [authGuard]}
+    {path:'dashboard/preguntas/:categoria/:idCategoria', component:PreguntasComponent, canActivate: [authGuard]}
 ]
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    PreguntasComponent
+    PreguntasComponent,
+    ComodinesComponent,
+    PuntajeGlobalCategoriaComponent
   ],
   imports: [
     CommonModule,
