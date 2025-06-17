@@ -91,7 +91,7 @@
     height: calc(100vh - 3.9em);
     right: 0;
     transition: transform .3s ease;
-    z-index: 100;
+    z-index: 10000;
     transform: translateX($posicion);
     display: flex;
     justify-items: center;

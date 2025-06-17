@@ -2,78 +2,67 @@
     @if(start){
        <div [ngClass]="finish ? 'columna-derecha-main-finish': 'columna-derecha-main'">
             <div [ngClass]="finish ? 'content-categoria-finish': 'content-categoria'">
-                <p class="text-categoria" style="font-size: 1.1em;">{{pregunta.nombreCategoria | uppercase}}</p>
-                <p class="text-categoria" style="font-size: 1em;">Puntos: {{puntosAcumulados}} ⭐</p>
+                <p class="text-categoria" [ngStyle]="{'font-size': '1.1em','margin-bottom': !finish ? null : '1.5em'}">
+                    {{pregunta.nombreCategoria | uppercase}}
+                </p>
+                <p [ngClass]="finish ? 'informacion-final': 'text-categoria'"style="font-size: 1em;">Puntos {{puntosAcumulados | number}} ⭐</p>
+                @if(finish){
+                    <p class="informacion-final">Puntos categoria: +{{puntosCategoria | number }}⭐</p>
+                    <p class="informacion-final">Preguntas correctas: {{(preguntaContestadaCorrectamente*100)/10}}%</p>
+                    <div id="puntaje-global">
+                        <app-puntaje-global-categoria 
+                        [puntos] = "puntosCategoria"
+                        [idCategoria]= "idCategoria"
+                        ></app-puntaje-global-categoria>
+                    </div>
+                    <button id="boton-continuar" (click)="volverInicio()">Continuar</button>
+                }
             </div>
             @if(!finish){
-                <div class="comodines">
-                    @for(comodin of comodines; track comodin){
-                        <div class="content-boton-comodin" [ngClass]="!listComodimesUsados.includes(comodin) ? 'content-boton-comodin':'content-boton-comodin-desactivado'"  alt="comodin" (click)="selectComodin(comodin)">
-                            <img src="comodines/comodin.svg" [ngClass]="!listComodimesUsados.includes(comodin) ? 'imagen-comodin':'imagen-comodin-desactivado'"  alt="comodin">
-                            <button class="boton-comodin" [ngClass]="!listComodimesUsados.includes(comodin) ? 'boton-comodin':'boton-comodin-desactivado'"  alt="comodin">{{comodin}}</button>
-                        </div>
-                    }
-                </div>
+                <app-comodines
+                    [pregunta] = "pregunta"
+                    [comodinUsadoPregunta]= "comodinUsadoPregunta"
+                    (enviarPausarTiempo) = "comodinPausarTiempo($event)"
+                    (enviarTiempo) = "comodinAgregarTiempo($event)"
+                    (enviarPuntosPregunta) = "comodinAgregarPuntos($event)"
+                    (enviarMostrarPregunta) = "comodinMostrarRespuestaCorrecta($event)"
+                    (enviarEliminarDosRespuesta) = "comodinEliminarDosRespuesta($event)"
+                ></app-comodines>
             }
        </div>
         <div class="main_pregunta-finalizar-juego">
                 <div id="preguntas" style="overflow: hidden;" >
                     <div [ngClass]="tiempoEspera==1 ? 'pregunta-siguiente' : finish ? 'pregunta-siguiente' : 'pregunta'"  [ngStyle]="{'gap' : pregunta.tipo=='boolean' ? '1em' : ''}">
                         <p id="titulo">{{pregunta.nombre}}</p>
-                            @if(pregunta.tipo=='multiple'){
                                 @for(item of indexRespuesta; track item; let index = $index){
                                     @if(preguntaContestada||tiempo<=0){ 
                                         @if(respuestas[index]==respuestaSelecionada){
                                             @if(respuestaSelecionada==pregunta.respuestasCorrecta){
-                                                <button class="boton-respuesta-correcta">{{item}}. {{respuestas[index]}}</button>
+                                                <button class="boton-respuesta-correcta">{{item}} {{respuestas[index]}}</button>
                                             }@else {
-                                                <button class="boton-respuesta-incorrecta">{{item}}. {{respuestas[index]}}</button>
+                                                <button class="boton-respuesta-incorrecta">{{item}} {{respuestas[index]}}</button>
                                             }
                                         }@else {
                                             @if(respuestaSelecionada!=pregunta.respuestasCorrecta&&respuestas[index]==pregunta.respuestasCorrecta){
-                                                <button class="boton-respuesta-correcta-default">{{item}}. {{respuestas[index]}}</button>
+                                                <button class="boton-respuesta-correcta-default">{{item}} {{respuestas[index]}}</button>
                                             }@else {
-                                                <button class="boton-respuestas">{{item}}. {{respuestas[index]}}</button>
+                                                <button class="boton-respuestas">{{item}} {{respuestas[index]}}</button>
                                             }
                                         }
                                     }@else{
                                         @if(mostrarRespuesta&&respuestas[index]==pregunta.respuestasCorrecta){
-                                            <button class="boton-respuesta-correcta" (click)="RespuestaSeleccionada(respuestas[index])">{{item}}. {{respuestas[index]}}</button>
-                                        }@else if(eliminarDosRespuesta&&respuestasIncorrectSelect.includes(respuestas[index])){
-                                            <button class="boton-respuesta-incorrecta" (click)="RespuestaSeleccionada(respuestas[index])">{{item}}. {{respuestas[index]}}</button>
-                                        }@else {
-                                            <button class="boton-respuestas" (click)="RespuestaSeleccionada(respuestas[index])">{{item}}. {{respuestas[index]}}</button>
+                                            <button class="boton-respuesta-correcta" (click)="RespuestaSeleccionada(respuestas[index])">{{item}} {{respuestas[index]}}</button>
+                                        }@else if(eliminarDosRespuesta&&respuestasIncorrectSelect.includes(respuestas[index])&&pregunta.tipo=="multiple"){
+                                            <button class="boton-respuesta-incorrecta" (click)="RespuestaSeleccionada(respuestas[index])">{{item}} {{respuestas[index]}}</button>
+                                        }@else if(eliminarDosRespuesta&&pregunta.tipo=="boolean"&&respuestas[index]!=pregunta.respuestasCorrecta){
+                                            <button class="boton-respuesta-incorrecta" (click)="RespuestaSeleccionada(respuestas[index])">{{item}} {{respuestas[index]}}</button>
+                                        }
+                                        @else {
+                                            <button class="boton-respuestas" (click)="RespuestaSeleccionada(respuestas[index])">{{item}} {{respuestas[index]}}</button>
                                         }
                                     }
                                 }
-                            }@else if (pregunta.tipo=="boolean") {
-                                @for(item of respuestas; track respuestas; let index = $index ){
-                                      @if(preguntaContestada||tiempo<=0){ 
-                                        @if(respuestas[index]==respuestaSelecionada){
-                                            @if(respuestaSelecionada==pregunta.respuestasCorrecta){
-                                                <button class="boton-respuesta-correcta">{{item}}</button>
-                                            }@else {
-                                                <button class="boton-respuesta-incorrecta">{{item}}</button>
-                                            }
-                                        }@else {
-                                            @if(respuestaSelecionada!=pregunta.respuestasCorrecta&&respuestas[index]==pregunta.respuestasCorrecta){
-                                                <button class="boton-respuesta-correcta-default">{{item}}</button>
-                                            }@else {
-                                                <button class="boton-respuestas">{{item}}</button>
-                                            }
-                                        }
-                                    }@else{
-                                        @if(mostrarRespuesta&&respuestas[index]==pregunta.respuestasCorrecta){
-                                            <button class="boton-respuesta-correcta" (click)="RespuestaSeleccionada(respuestas[index])">{{item}}</button>
-                                        }@else if(eliminarDosRespuesta&&respuestas[index]!=pregunta.respuestasCorrecta){
-                                            <button class="boton-respuesta-incorrecta" (click)="RespuestaSeleccionada(respuestas[index])">{{item}}</button>
-                                        }@else {
-                                            <button class="boton-respuestas" (click)="RespuestaSeleccionada(respuestas[index])">{{item}}</button>
-                                        }
-                                    }
-                                }
-                            }
-                        <div id="content-footer-pregunta">
+                        <div id="content-footer-pregunta" [ngStyle]="{'margin-top' : pregunta.tipo=='boolean' ? '5em' : '0'}">
                             <p class="text-footer">Puntos: {{pregunta.puntoPregunta}} ⭐</p>
                             <p class="text-footer">{{pregunta.dificultad | uppercase}}</p>
                         </div>
@@ -100,8 +89,7 @@
                         <ol>2. Solo puedes usar 3 comodimes por cada juego</ol>
                         <ol>3. Hay un total de 5 comodimes y cada uno te ayudara de una forma diferente</ol>
                         <ol>4. tienes un tiempo estimado de 1m:30s por cada pregunta</ol>
-                        <ol>5. se perdera la pregunta si se intenta copiar el contenido</ol>
-                        <ol>6. se perdera el proceso si se reinicia la App</ol>
+                        <ol>5. se perdera el proceso si se reinicia la App</ol>
                     </ul>
                 </div>
                 <div style="display: flex;justify-content: center; margin-top: 1em;">

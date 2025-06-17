@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PreguntasService } from '../../dashboard/service/preguntas.service';
 import { ObtenerPreguntasPublicService } from '../../../public/Game/service preguntaPublicas/obtener-preguntas-public.service';
+import { DashboardService } from '../../dashboard/service/dashboard.service';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-preguntas',
@@ -11,8 +13,10 @@ import { ObtenerPreguntasPublicService } from '../../../public/Game/service preg
 })
 export class PreguntasComponent implements OnInit{
 
-  public constructor(private router:ActivatedRoute, private preguntasService:PreguntasService, private respuestaService:ObtenerPreguntasPublicService){
-    router.paramMap.subscribe({
+  public constructor(private router:ActivatedRoute, private preguntasService:PreguntasService, private respuestaService:ObtenerPreguntasPublicService, 
+                     private route:Router,private puntosCategoriaService:DashboardService){
+
+    this.router.paramMap.subscribe({
       next: (params)=>{
         this.nombreCategoria = params.get('categoria');
         this.idCategoria = params.get('idCategoria');
@@ -20,7 +24,16 @@ export class PreguntasComponent implements OnInit{
       error: (errors)=>{
         console.log(errors);
       }
-    })
+    });
+
+   this.puntosCategoriaService.obterPuntoCategoria().subscribe({
+      next: (data)=>{
+          this.puntosCategoria = Number.parseInt(data.filter((p:any)=>p.nombre==this.nombreCategoria).map((p:any)=>p.puntosCategoria));
+      },
+      error: (errors)=>{
+        console.log(errors);
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -40,10 +53,6 @@ export class PreguntasComponent implements OnInit{
   }
 
   tiempoPregunta(){
- if(this.contadorPreguntas>10){
-          this.finish=true;
-          console.log("hola")
-        }
     let setIntervalo = setInterval(()=>{
 
       if(!this.pausarTiempo)
@@ -75,120 +84,73 @@ export class PreguntasComponent implements OnInit{
     },1000)
   }
 
-  selectComodin(comodin:string){
-
-    if(!this.estadoComodines()){
-
-      if(comodin=="Pausar Tiempo"&& !this.listComodimesUsados.includes(comodin)){
-        this.comodinPausarTiempo(comodin);
-      }else if(comodin=="50 / 50"&& !this.listComodimesUsados.includes(comodin)){
-        this.comodinEliminarDosRespuesta(comodin);
-      }else if(comodin=="Puntos x3"&& !this.listComodimesUsados.includes(comodin)){
-        this.comodinAgregarPuntos(comodin);
-      }else if(comodin=="Respuesta mitad puntos"&& !this.listComodimesUsados.includes(comodin)){
-        this.comodinMostrarRespuestaCorrecta(comodin);
-      }else if(comodin=="Tiempo x2"&& !this.listComodimesUsados.includes(comodin)){
-        this.comodinAgregarTiempo(comodin);
-      }
-     
-    }
-  }
-
-  comodinAgregarTiempo(comodin:string){
-    if(this.comodinesUsados<3){
-      this.agregarTiempo=true;
-      this.tiempo += 90;
-      this.comodinesUsados++;
+  comodinAgregarTiempo(tiempoComodin:any){
+      this.tiempo += tiempoComodin;
       this.comodinUsadoPregunta=true;
-      this.listComodimesUsados.push(comodin);
-    }
   }
 
-  comodinPausarTiempo(comodin:string){
-     if(this.comodinesUsados<3){
-        this.pausarTiempo=true;
-        this.comodinesUsados++;
-        this.comodinUsadoPregunta=true;
-        this.listComodimesUsados.push(comodin);
-      }
-  }
-
-  comodinAgregarPuntos(comodin:string){
-    if(this.comodinesUsados<3){
-      this.agregarPuntosPregunta = true;
-      this.pregunta.puntoPregunta*= 3;
-      this.comodinesUsados++; 
+  comodinPausarTiempo(pausarTiempoComodin:any){
+      this.pausarTiempo=pausarTiempoComodin;  
       this.comodinUsadoPregunta=true;
-      this.listComodimesUsados.push(comodin);
-    }
-
   }
 
-  comodinMostrarRespuestaCorrecta(comodin:string){
-    if(this.comodinesUsados<3){
-        this.mostrarRespuesta=true;
-        this.pregunta.puntoPregunta/= 2;
-        this.comodinesUsados++;
-        this.comodinUsadoPregunta=true;
-        this.listComodimesUsados.push(comodin);
-      }
-    
+  comodinAgregarPuntos(puntosPreguntaComodin:any){
+      this.pregunta.puntoPregunta = puntosPreguntaComodin;
+      this.comodinUsadoPregunta=true;
   }
 
-  comodinEliminarDosRespuesta(comodin:string){
-    if(this.comodinesUsados<=3){
-      this.eliminarDosRespuesta=true;
-      this.comodinesUsados++;
+  comodinMostrarRespuestaCorrecta(mostrarRespuestaComodin:any){
+      this.mostrarRespuesta=mostrarRespuestaComodin;
+      this.comodinUsadoPregunta=true;
+      this.pregunta.puntoPregunta/= 2;
+  }
+
+  comodinEliminarDosRespuesta(mostrarDosRespuestaIncorrectascomodin:any){
+      this.eliminarDosRespuesta=mostrarDosRespuestaIncorrectascomodin;
       this.comodinUsadoPregunta=true;
       this.respuestasIncorrectSelect = this.pregunta.respuestasIncorrecta.filter((p:any)=>p!=this.pregunta.respuestasCorrecta);
       this.respuestasIncorrectSelect.pop();
-      this.listComodimesUsados.push(comodin);
-    }
-  }
-
-  estadoComodines():boolean{
-    let desactivar = this.comodinesUsados>3||this.comodinUsadoPregunta ? true : false;
-    return desactivar;
   }
 
   PreguntaSiguiente(){
     this.restablecerValores();
-    
   }
 
   restablecerValores(){
     if(this.contadorPreguntas<10){
 
       this.pregunta = this.preguntas[this.contadorPreguntas];
+      this.indexRespuesta = this.pregunta.tipo=="boolean" ? ['',''] : ['A.','B.','C.','D.'];
       this.contadorPreguntas++;
-      this.comodinUsadoPregunta=false;
       this.siguiente_pregunta = true;
       this.preguntaContestada=false;
       this.pregunta.respuestasIncorrecta = this.pregunta.respuestasIncorrecta.filter((p)=>p != this.pregunta.respuestasCorrecta);
       this.respuestas = this.respuestaService.GetRespuestaAleatoriasHttp(this.pregunta);
       this.respuestasIncorrectSelect = this.pregunta.respuestasIncorrecta.slice(-2);
       this.respuestaSelecionada="";
-      this.mostrarRespuesta=false;
-      this.eliminarDosRespuesta=false;
       this.pausarTiempo=false;
+      this.comodinUsadoPregunta = false;
+      this.eliminarDosRespuesta=false;
+      this.mostrarRespuesta=false;
       this.finish=false;
       this.tiempoPregunta();
 
     }else{
+
+      this.puntosCategoria+=this.puntosAcumulados;
       this.contadorPreguntas=11;
-      this.finish=true;
-      console.log("hola");
       this.preguntasService.setPuntosCategoria(this.idCategoria,this.puntosAcumulados).subscribe({
          next:(mensaje)=>{
           console.log(mensaje);
+          this.finish=true;
          },
           error: (errors)=>{
             console.log(errors);
+            this.finish=true;
           }
       });
+
     }
-      
-  
   }
 
   RespuestaSeleccionada(nombre:string){
@@ -196,12 +158,21 @@ export class PreguntasComponent implements OnInit{
     this.puntosAcumulados += nombre == this.pregunta.respuestasCorrecta ? this.pregunta.puntoPregunta :  this.puntosAcumulados >0 ? -75 : 0;
     this.respuestaSelecionada = nombre;
     this.preguntaContestada=true;
+    this.preguntaContestadaCorrectamente += nombre == this.pregunta.respuestasCorrecta ? 1 : 0;
+  }
+
+  
+  volverInicio():void{
+    this.route.navigate(['dashboard']);
   }
 
   public nombreCategoria:any;
   public idCategoria:any;
   public preguntas:any[] = [];
-  public contadorPreguntas:number=8;
+  public contadorPreguntas:number=0;
+  public siguiente_pregunta:boolean=true;
+  public preguntaContestada:boolean=false;
+  public preguntaContestadaCorrectamente:number = 0;
   public pregunta = {
     dificultad: "",
     nombre: "",
@@ -214,24 +185,9 @@ export class PreguntasComponent implements OnInit{
     tipo: ""
   };
 
-  //comodines ayudan al jugador
-  //1. pausar timepo
-  //2. eliminar dos respuesta
-  //3. doblejar puntos
-  //4. mostrar respuesta con la mitad de los puntos
-  //3. solo se puede usar tres comodimes en todo el juego
-  
-  public pausarTiempo:boolean = false;
-  public eliminarDosRespuesta:boolean = false;
-  public agregarPuntosPregunta:boolean = false;
-  public mostrarRespuesta:boolean = false;
-  public agregarTiempo:boolean = false;
-  public comodinesUsados:number =0;
-  public comodinUsadoPregunta:boolean = false;
-  public listComodimesUsados:string[] = [];
-
   //puntos del jugador
   public puntosAcumulados:number=0;
+  public puntosCategoria:number = 0;
 
   //tiempo por pregunta en segundos
   public tiempo:number = 90;
@@ -241,20 +197,15 @@ export class PreguntasComponent implements OnInit{
   public start:boolean=false;
   public finish:boolean=false;
 
-  public siguiente_pregunta:boolean=true;
-
-  public preguntaContestada:boolean=false;
   public respuestaSelecionada:string="";
 
   //datos del juego 
   public respuestas:string[] = [];
   public indexRespuesta:string[] = ['A','B','C','D']
   public respuestasIncorrectSelect:string[] = [] ;
-  public comodines: string[] = ["Pausar Tiempo","50 / 50","Puntos x3","Respuesta mitad puntos","Tiempo x2"];
+  public eliminarDosRespuesta:boolean = false;
+  public pausarTiempo:boolean = false;
+  public mostrarRespuesta:boolean = false;
+  public comodinUsadoPregunta:boolean = false;
 
-  ///////////////////////////////
-  ///estilos////////////
-  public colorFondo: string = "";
-  public colorBorde: string = "";
-  //////////////////////////
 }

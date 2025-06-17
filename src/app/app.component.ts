@@ -72,6 +72,9 @@ export class AppComponent{
     this.toggerMenu = !this.toggerMenu;
   }
 
+  navegar(url:string){
+    this.router.navigate([url]);
+  }
   usuarioRegistrado:boolean=false;
   title = 'Preguntin';
   //cuando hagan click en los botones de iniciar sesion o registrase que los botones se oculten

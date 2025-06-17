@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
-import { Preguntas } from '../../../public/Models/preguntas/Preguntas.models';
+import {  Observable } from 'rxjs';
 import { AuthService } from '../../../Auth/services/auth.service';
 
 @Injectable({

@@ -19,9 +19,19 @@ export class DashboardService {
     return this.http.get<any>(`http://localhost:5075/Game/player/categorias/${this.idUsuario}`, {headers});
   }
 
+  obterPuntoCategoria():Observable<any>{
+    let headers = this.headers;
+    return this.http.get<any>(`http://localhost:5075/Game/player/categorias/${this.idUsuario}`, {headers});
+  }
+
   setPuntosJugador(puntos:number):Observable<string>{
     let headers = this.headers;
     return this.http.post<string>('http://localhost:5075/Game/player/puntosJugador',{"id":this.idUsuario, "puntos":puntos},{headers})
+  }
+
+  obtnerTopCategoria(idCategoria:number):Observable<any>{
+    let headers = this.headers;
+    return this.http.get<any>(`http://localhost:5075/Game/player/PuntosGlobalcategoria/top/${idCategoria}`,{headers})
   }
 
   public headers:any;

@@ -6,9 +6,10 @@ import { RouterModule } from '@angular/router';
 import { GraphQLModule } from './graphql.module';
 import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './Auth/auth.module';
-import { UserModule } from './user/user.module';
+import { GameModule } from './user/game.module';
 import { GamePublicComponent } from './public/Game/Public/game-public/game-public.component';
 import { HttpClientModule } from '@angular/common/http';
+import { UserModule } from './informacion_usuario/user.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
     GraphQLModule,
     AdminModule,
     AuthModule,
+    GameModule,
     UserModule
   ],
   providers: [],
