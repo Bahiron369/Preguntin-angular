@@ -1,0 +1,42 @@
+@use '../../preguntas/preguntas.component.scss' as mx;
+
+#ranking{
+    overflow: auto;
+    height: 85%;
+    padding-top: 0.2em;
+}
+.mostrarJugador{
+    display: flex;
+    flex-direction:row;
+    margin: 0.2em 1em;
+    padding: 0.61em;
+    border-radius: 5px;
+    box-shadow: 1px 0 8px #e5e7e9,
+                0 0 1px #909497,
+                1px 1px 1px white;
+    cursor: default;
+    overflow: auto;
+
+}
+
+.nombre{
+    text-align: justify;
+    font-family: "Inter", sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    color: #7b7d7d;
+    margin-left: 2em;
+}
+.puntos{
+    color: #f1c40f;
+    margin-left: auto;
+    
+}
+#titulo-ranking{
+
+    text-align: center;
+    padding: 1em;
+    font-weight: bold;
+    z-index: 10000;
+    background-color: white;
+}

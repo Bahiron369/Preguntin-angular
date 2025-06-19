@@ -1,0 +1,8 @@
+ <div class="comodines">
+    @for(comodin of comodines; track comodin){
+        <div class="content-boton-comodin" [ngClass]="!listComodimesUsados.includes(comodin) ? 'content-boton-comodin':'content-boton-comodin-desactivado'"  alt="comodin" (click)="selectComodin(comodin)">
+            <img src="comodines/comodin.svg" [ngClass]="!listComodimesUsados.includes(comodin) ? 'imagen-comodin':'imagen-comodin-desactivado'"  alt="comodin">
+                <button class="boton-comodin" [ngClass]="!listComodimesUsados.includes(comodin) ? 'boton-comodin':'boton-comodin-desactivado'"  alt="comodin">{{comodin}}</button>
+        </div>
+    }
+</div>

@@ -1,0 +1,55 @@
+@use '../../Auth/style/estilos_generales.scss' as mx;
+
+#main{
+    @include mx.content_principal;
+}
+
+#main-informacion  {
+    @include mx.contenedor(0.1em);
+}
+
+.datos{
+   @include mx.entradas( #e67e22);
+   min-width: 81%
+}
+.datos:disabled{
+    background-color: #d5dbdb;
+}
+
+.titulo{
+  @include mx.text_principal(#626567,1.5em);
+  margin-bottom: 1em;
+}
+
+.botones_contrasena{
+    @include mx.boton(#d35400,#dc7633,white,#d35400,40,3em);
+}
+
+.boton_habilitar{
+    height: 25px;
+    width: 25px;
+    font-size: 1.5em;
+    margin-left: 0.5em;
+}
+
+.error{
+    @include mx.errors(0.3em,0.8em);
+}
+
+.text-informacion{
+    text-align: center;
+    color: #626567;
+    font-size: 14px;
+    margin-bottom: 1em;
+}
+.text-informacion-servidor{
+    color: #626567;
+    font-size: 14px;
+    margin-bottom: 0.7em;
+}
+
+////////////////////////cambiar contraseña //////////////////////////
+
+.cambioContrasena{
+    @include mx.contenedor(0.1em);
+}

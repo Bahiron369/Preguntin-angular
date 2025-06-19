@@ -1,0 +1,86 @@
+@use '../preguntas/preguntas.component.scss' as mx;
+
+@mixin imagenComodin(){
+    position: relative;
+    border-radius: 2%;
+    width: 70px;
+    height: 70px;
+    z-index: 1000;
+    transition: transform .4s ease;
+}
+
+@mixin botonComodin($ancho){
+    position: absolute;
+    width: $ancho;
+    overflow: hidden;
+    height: 8vh;
+    border-radius: 1em;
+    margin-top: 0.4em;
+    margin-left: 1em;
+    background-color: #bdc3c7;
+    padding-left: 1em;
+}
+
+@mixin content-comodin($max-ancho){
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    text-align: justify;
+    max-height: 20%;
+    max-width: $max-ancho;
+}
+
+@mixin comodin-estilo(){
+    @include mx.contenido-derecha(80%);
+    display:inline-flex;
+    gap: 1.5em;
+    padding-left: 2em;
+    min-height: 90%;
+    min-width: 92%;
+    transition: transform .2s ease;
+}
+.comodines{
+  @include comodin-estilo;
+}
+
+//para la imagen del comodin al mostrarse y ocultarse
+.imagen-comodin{
+   @include imagenComodin();
+}
+
+.imagen-comodin:hover{
+    transform: rotate(-90deg);
+}
+
+.imagen-comodin-desactivado{
+    @include imagenComodin();
+    transform: rotate(-90deg);
+}
+
+/*boton del comodin el que ejecuta la accion*/
+.boton-comodin{
+   @include botonComodin(0);
+   transition: width 0.4s ease;
+
+}
+
+.boton-comodin-desactivado{
+    @include botonComodin(100%);
+}
+
+.content-boton-comodin:hover .boton-comodin{
+    width: 100%;
+}
+
+//contenedor principal del comodin
+.content-boton-comodin{
+    @include content-comodin(0);
+    transition: max-width 0.4s ease;
+}
+
+.content-boton-comodin:hover{
+    max-width: 90%;
+}
+.content-boton-comodin-desactivado{
+    @include content-comodin(90%);
+}

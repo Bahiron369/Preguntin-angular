@@ -1,0 +1,18 @@
+<div id="content_punto_total">
+    <h1>{{puntosTotales | number:'1.0-0'}} puntos 🌟</h1>
+</div>
+<div id="content_main">
+    @for(item of categorias; track categorias){
+        <div class="Categorias" (click)="routerPreguntas(item.nombre,item.idCategoria)">
+            <div class="content_img_categoria">
+                <img height="200px" width="250px" style="border-radius: 8px;" src="categoria.svg" alt="Imagen">
+            </div>
+            <div class="content_inf_categoria">
+                <p style="max-width: 125px;">{{item.nombre}}</p>
+                <p>{{item.puntosCategoria | number}} ⭐</p>
+            </div>
+        </div>
+    }@empty {
+        <p id="mensaje_sin_categorias">No hay categorias</p>
+    }
+</div>
