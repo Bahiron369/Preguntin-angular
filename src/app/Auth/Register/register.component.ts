@@ -14,9 +14,9 @@ export class RegisterComponent {
 
   constructor(private fb:FormBuilder, private router:Router, private registroServicio:RegistroService){
     this.register = fb.group({
-      nombre: ['',[Validators.required,Validators.minLength(5)]],
+      nombre: ['',[Validators.required,Validators.minLength(5),Validators.maxLength(15)]],
       email: ['',[Validators.email,Validators.required,Validators.pattern(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,}/)]],
-      telefono: ['',[Validators.minLength(10),Validators.pattern(/^(?=.*[0-9])/)]],
+      telefono: ['',[Validators.minLength(10),Validators.pattern(/^[0-9]+$/)]],
       password: ['',[Validators.required,Validators.minLength(8),Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[*+-.#@%&$!]).{8,}$/)]],
       confirPassword: ['',Validators.required]
     })

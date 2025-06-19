@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Apollo, gql, Mutation } from 'apollo-angular';
+import { Apollo, gql } from 'apollo-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,83 @@ export class GraphqlService {
       }`,
       variables:{
         email
+      }
+    });
+  }
+
+  actualizarInformacionUsuario(usuario:any){
+    
+    let nombre:string = usuario["nombre"];
+    let email:string = usuario["email"];
+    let telefono:string = usuario["numero"];
+
+    return this.apollo.mutate({
+      mutation:gql`
+      mutation informacionJugador($email:String,$nombre:String,$telefono:String){
+          updateJugador(inputJugador:  {
+              nombre: $nombre,
+              email: $email,
+              telefono: $telefono
+          }){
+            token
+            mensajes
+            valido
+          }
+        }`,
+      variables:{
+        nombre,
+        email,
+        telefono
+      }
+    });
+
+  }
+ actualizarContrasenaUsuario(contrasenaActual:string,contrasenaNueva:string){
+    
+    return this.apollo.mutate({
+      mutation:gql`
+      mutation informacionJugador($contrasenaActual:String!,$contrasenaNueva:String!){
+          updateJugador(inputJugador:  {
+              oldPassword: $contrasenaActual,
+              newPassword: $contrasenaNueva,
+          }){
+            mensajes
+            valido
+          }
+        }`,
+      variables:{
+        contrasenaActual,
+        contrasenaNueva
+      }
+    });
+  }
+
+  queryInformacionUsuario(){
+    return gql `query{
+                  queryInfUser{
+                  id
+                  email
+                  telefono
+                  name
+                  }
+                }`
+  }
+  
+  actualizarCorreo(id:String,nuevoEmail:string,token:string){
+    return this.apollo.mutate({
+      mutation:gql `
+      mutation cambioEmail($id:String!,$token:String!,$nuevoEmail:String!){
+        validEmail(validEmail:  {
+          id: $id,
+          tokenEmail: $token,
+          newEmail: $nuevoEmail
+        })
+      }
+      `,
+      variables:{
+        id,
+        nuevoEmail,
+        token
       }
     });
   }

@@ -1,1 +1,48 @@
-<p>informacion-usuario works!</p>
+<div id="main">
+    @if(activarCambioContrasena){
+        @if(!contrasenaCambiada){
+            <div class="cambioContrasena">
+                <h1 class="titulo">Cambio de contraseña</h1>
+                <input class="datos" type="password" placeholder="Contraseña" [(ngModel)]="actualContrasena">
+                <p class="error">{{errorPassword}}</p>
+                <input class="datos" type="password" id="" placeholder="Nueva contraseña" [(ngModel)]="nuevacontrasena">
+                <p class="error">{{errorNewPassword}}</p>
+                <input class="datos" type="password" id="" placeholder="confirmar nueva contraseña" [(ngModel)]="confirmarContrasena">
+                <input type="submit"  class="botones_contrasena" style="margin-top: 2em;" (click)="cambiarContrasena()" value="cambiar">
+            </div>
+        }@else {
+            <div class="cambioContrasena">
+                <p class="titulo" style="font-size: 1.2em;">Contraseña cambiada exitosamente</p>
+                <button (click)="redirigirLogin()" class="botones_contrasena" style="margin-top: 2em;">Continuar</button>
+            </div>
+        }
+        
+
+    }@else{
+        <div id="main-informacion">
+            <h1 class="titulo">Informacion Jugador</h1>
+            
+            @for(informacion of Claves; track Claves){
+                @if(informacion!="id"){
+                    <label>{{informacion}}</label>
+                    <div class="campoInformacion">
+                        @if(usuario[informacion]==null||usuario[informacion]==""&&informacion=="numero"){
+                            <input type="text" class="datos" placeholder="Agregar Numero" (keydown.enter)="ingresarInformacion(informacion,campo.value)" #campo>
+                        }@else {
+                            <input type="text" class="datos" [value]="usuario[informacion]" (keydown.enter)="ingresarInformacion(informacion,campo.value)" [disabled]="desactivarCampo[informacion]" #campo>
+                        }
+                        <button (click)="HabilitarCampo(informacion)" class="boton_habilitar">📝</button>
+                    </div>
+                   
+                    @if(mensajeServidor[informacion]!=""&&mensajeServidor[informacion]!=null){
+                        <p class="text-informacion-servidor">{{mensajeServidor[informacion]}}</p>
+                    }@else {
+                        <p class="error">{{errores[informacion]}}</p>
+                    }
+                }
+            }
+            <p class="text-informacion" style="margin-top: 1em;">para guardar los cambios presiona Enter </p>
+            <button (click)="ActivarCambioContrasena()" class="botones_contrasena">Cambiar contraseña</button>
+        </div>
+    }
+</div>

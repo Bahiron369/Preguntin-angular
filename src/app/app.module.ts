@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { GraphQLModule } from './graphql.module';
 import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './Auth/auth.module';
-import { GameModule } from './user/game.module';
+import { GameModule } from './Game/game.module';
 import { GamePublicComponent } from './public/Game/Public/game-public/game-public.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UserModule } from './informacion_usuario/user.module';

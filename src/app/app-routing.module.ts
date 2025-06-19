@@ -4,10 +4,11 @@ import { GamePublicComponent } from './public/Game/Public/game-public/game-publi
 import { RegisterComponent } from './Auth/Register/register.component';
 import { LoginComponent } from './Auth/Login/login.component';
 import { ForgetPasswordComponent } from './Auth/login_forget/forget-password.component';
-import { DashboardComponent } from './user/dashboard/dashboard/dashboard.component';
+import { DashboardComponent } from './Game/dashboard/dashboard/dashboard.component';
 import { authGuard } from './Auth/auth.guard';
 import { blockAuthGuard } from './Auth/block-auth.guard';
-import { PreguntasComponent } from './user/questions/preguntas/preguntas.component';
+import { PreguntasComponent } from './Game/questions/preguntas/preguntas.component';
+import { InformacionUsuarioComponent } from './informacion_usuario/informacion-usuario/informacion-usuario.component';
 
 
 const routes: Routes = [
@@ -17,7 +18,8 @@ const routes: Routes = [
   {path:'auth/login', component:LoginComponent, canActivate: [blockAuthGuard]},
   {path:'auth/login/forget', component:ForgetPasswordComponent, canActivate: [blockAuthGuard]},
   {path:'dashboard', component:DashboardComponent, canActivate: [authGuard]},
-  {path:'dashboard/preguntas/:categoria/:idCategoria', component:PreguntasComponent, canActivate: [authGuard]}
+  {path:'dashboard/preguntas/:categoria/:idCategoria', component:PreguntasComponent, canActivate: [authGuard]},
+  {path:'dashboard/informacion', component:InformacionUsuarioComponent, canActivate:[authGuard]},
 
 ];
 

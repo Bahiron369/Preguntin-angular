@@ -28,7 +28,7 @@ export class AuthService {
   getInforUsuario():any{
     let token = localStorage.getItem('token')
 
-    if(token!=null){
+    if(token!=null && token != ""){
       return jwtDecode(token)
     }else{
       return null;
