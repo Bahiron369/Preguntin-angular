@@ -32,6 +32,7 @@ export class InformacionUsuarioComponent implements OnInit{
   } 
   
   ingresarInformacion(campo:string, valor:string){
+
     //comprobamos que la informacion ingresada sea valida para procesar
     if(this.comprobarInformacion(campo,valor)){
 
@@ -65,9 +66,9 @@ export class InformacionUsuarioComponent implements OnInit{
             
           }else{
             this.errores[campo] = datos.updateJugador.mensajes;
-             this.mensajeServidor[campo]="";
+            this.mensajeServidor[campo]="";
+          
           }
-
           if(datos.updateJugador.token!=null)
             localStorage.setItem('token',datos.updateJugador.token);
 
@@ -109,7 +110,7 @@ export class InformacionUsuarioComponent implements OnInit{
 
   comprobarInformacion(campo:string,valor:string):boolean{
     //si el valor no es valido
-    if(valor!=null){
+    if(valor!=null||campo=="numero"){
       if(valor!=this.usuario[campo]){//el valor no sea igual al dato ya existente
           if(campo=="nombre"){
             //comprobar longitud del nombre
@@ -117,7 +118,7 @@ export class InformacionUsuarioComponent implements OnInit{
           }else if(campo=="numero"){
             //comprobar el patron del numero (aceptar solo numeros)
             let patron = /^[0-9]+$/;
-            return valor.length==10 && patron.test(valor) ? true : false //comprobar que todo este bien
+            return valor.length==10 && patron.test(valor) || valor ==  '' ? true : false //comprobar que todo este bien
           }else if(campo=="email"){
             //comprobar patron correo electronico valido
             let patron = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,}/; 

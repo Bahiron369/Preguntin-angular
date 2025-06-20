@@ -35,6 +35,16 @@ export class AuthService {
     }
   }
 
+  IsAdmin():boolean{
+    const usuario = this.getInforUsuario();
+    const roles = usuario['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    if(roles.includes("Admin")){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   getIdUsuario():string{
     let usuario = this.getInforUsuario();
     return usuario.sub

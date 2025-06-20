@@ -30,6 +30,10 @@
         <p class="nombre-usuario">{{nombreUsuario}}</p>
         <hr style="margin-top: 1em;">
         <button class="boton_opciones_aside" (click)="navegar('dashboard')">Categorias 🏷️</button>
+        @if(Admin){
+            <button class="boton_opciones_aside" (click)="navegar('dashboard/admin/juego')">Juego 🎮</button>
+            <button class="boton_opciones_aside" (click)="navegar('dashboard/admin/usuarios')">Usuarios 👤</button>
+        }
         <button class="boton_opciones_aside" (click)="navegar('dashboard/informacion')">Informacion ℹ️</button>
         <hr>
         <button (click)="cerrarSesion()" (click)="navegar('/informacion')" class="botones_cerrar_sesion">Cerrar sesión 🚪</button>

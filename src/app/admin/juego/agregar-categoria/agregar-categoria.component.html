@@ -1,0 +1,43 @@
+<div id="main-agregar-categoria">
+   <h2>Crear categoria</h2>
+   <p>Cantidad preguntas: {{contadorPreguntas}}</p>
+   <input type="text" placeholder="Nombre categoria" [(ngModel)]="nombreCategoria">
+   <p>seleccionar categoria existente</p>
+   <select name="nombreCategorias" [(ngModel)]="nombreCategoria" pla>
+        @for(nombre of nombreCategoriasExistentes; track nombre){
+            <option [value]="nombre">{{nombre}}</option>
+        }
+    </select>
+        <div class="pregunta">
+            <input type="text" placeholder="Enunciado pregunta" [(ngModel)]="pregunta.nombre">
+            <p>dificultad</p>
+            <select name="dificultad" id=""  [(ngModel)]="pregunta.dificultad">
+                <option value="easy">easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+            <p>Tipo pregunta</p>
+            <select name="type" [(ngModel)]="pregunta.tipo">
+                <option value="boolean">boolean</option>
+                <option value="multiple">multiple</option>
+            </select>
+          
+            <!--Para agregar preguntas booleanas-->
+            @if(pregunta.tipo=="boolean"){
+                <input type="radio" name="respuestaCorrecta" id="" value="True" (click)="agregarRespuestaBooleana(true,true)" >
+                <label for="respuestaCorrecta">True</label>
+
+                <input type="radio" name="respuestaCorrecta" id="" value="False" (click)="agregarRespuestaBooleana(true,false)">
+                <label for="respuestaCorrecta">False</label>
+            }@else if(pregunta.tipo=="multiple"){
+                <input type="text" placeholder="Respuesta correcta" [(ngModel)]="pregunta.respuestasCorrecta">
+                <input type="text" placeholder="Respuesta incorrecta" [(ngModel)]="respuestasIncorrecta[0]">
+                <input type="text" placeholder="Respuesta incorrecta" [(ngModel)]="respuestasIncorrecta[1]">
+                <input type="text" placeholder="Respuesta incorrecta" [(ngModel)]="respuestasIncorrecta[2]">
+            }
+        </div>
+        <p>{{errorPregunta}}</p>
+        <p>{{errorCategoria}}</p>
+   <button (click)="agregarPregunta()">Agregar pregunta</button>
+   <button (click)="guardarPregunta()">Guardar</button>
+</div>

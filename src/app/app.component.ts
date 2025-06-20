@@ -17,6 +17,7 @@ export class AppComponent{
         this.botones_autentificacion_activados = event.urlAfterRedirects == '/' ?  true : false;
     })
 
+    this.Admin = authUsuario.IsAdmin();
    
   }
   RedirigirAuht(url:string){
@@ -78,7 +79,8 @@ export class AppComponent{
   usuarioRegistrado:boolean=false;
   title = 'Preguntin';
   //cuando hagan click en los botones de iniciar sesion o registrase que los botones se oculten
-  botones_autentificacion_activados:boolean = true;
-  nombreUsuario:string="";
-  toggerMenu:boolean = false;
+  public botones_autentificacion_activados:boolean = true;
+  public nombreUsuario:string="";
+  public Admin:boolean=false;
+  public toggerMenu:boolean = false;
 }

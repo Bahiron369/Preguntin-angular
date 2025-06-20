@@ -17,7 +17,7 @@ export class RegisterComponent {
       nombre: ['',[Validators.required,Validators.minLength(5),Validators.maxLength(15)]],
       email: ['',[Validators.email,Validators.required,Validators.pattern(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,}/)]],
       telefono: ['',[Validators.minLength(10),Validators.pattern(/^[0-9]+$/)]],
-      password: ['',[Validators.required,Validators.minLength(8),Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[*+-.#@%&$!]).{8,}$/)]],
+      password: ['',[Validators.required,Validators.minLength(8),Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[*+-._#@%&$!]).{8,}$/)]],
       confirPassword: ['',Validators.required]
     })
 
@@ -94,7 +94,7 @@ export class RegisterComponent {
       this.errorNombre =""
 
     //validar numero
-    if(!this.camposValidos.numeroValido){
+    if(!this.camposValidos.numeroValido&&this.usuario.Telefono!=""){
       this.errorNumero = "El numero ya existe";
       this.informacionValida=false;
     }else

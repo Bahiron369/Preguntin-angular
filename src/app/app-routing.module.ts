@@ -9,6 +9,10 @@ import { authGuard } from './Auth/auth.guard';
 import { blockAuthGuard } from './Auth/block-auth.guard';
 import { PreguntasComponent } from './Game/questions/preguntas/preguntas.component';
 import { InformacionUsuarioComponent } from './informacion_usuario/informacion-usuario/informacion-usuario.component';
+import { JuegoComponent } from './admin/juego/juego.component';
+import { UsuariosComponent } from './admin/usuarios/usuarios.component';
+import { adminGuard } from './Auth/admin.guard';
+import { AgregarCategoriaComponent } from './admin/juego/agregar-categoria/agregar-categoria.component';
 
 
 const routes: Routes = [
@@ -20,6 +24,9 @@ const routes: Routes = [
   {path:'dashboard', component:DashboardComponent, canActivate: [authGuard]},
   {path:'dashboard/preguntas/:categoria/:idCategoria', component:PreguntasComponent, canActivate: [authGuard]},
   {path:'dashboard/informacion', component:InformacionUsuarioComponent, canActivate:[authGuard]},
+  {path:'dashboard/admin/juego',component:JuegoComponent, canActivate:[adminGuard]},
+  {path:'dashboard/admin/usuarios', component:UsuariosComponent, canActivate:[adminGuard]},
+  {path:'dashboard/admin/juego/agregar-categoria', component:AgregarCategoriaComponent, canActivate:[adminGuard]}
 
 ];
 
