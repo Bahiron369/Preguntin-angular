@@ -11,7 +11,8 @@ import { ModificarCategoryComponent } from './juego/modificar-category/modificar
 const routes:Routes = [
   {path:'dashboard/admin/juego',component:JuegoComponent, canActivate:[adminGuard]},
   {path:'dashboard/admin/usuarios', component:UsuariosComponent, canActivate:[adminGuard]},
-  {path:'dashboard/admin/juego/agregar-categoria', component:AgregarCategoriaComponent, canActivate:[adminGuard]}
+  {path:'dashboard/admin/juego/agregar-categoria', component:AgregarCategoriaComponent, canActivate:[adminGuard]},
+  {path:'dashboard/admin/juego/modificar-category/:nombreCategoria/:idCategoria', component:ModificarCategoryComponent, canActivate:[adminGuard]}
 ]
 
 @NgModule({

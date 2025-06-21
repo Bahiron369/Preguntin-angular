@@ -40,9 +40,11 @@ export class PreguntasComponent implements OnInit{
     this.preguntasService.GetPreguntas(this.nombreCategoria).subscribe({
        next: (result)=>{
         this.preguntas = result;
+        console.log(this.preguntas)
       },
       error: (errors)=>{
         console.log(errors);
+        console.log(this.preguntas)
       }
     });
   } 
@@ -117,7 +119,10 @@ export class PreguntasComponent implements OnInit{
   }
 
   restablecerValores(){
-    if(this.contadorPreguntas<10){
+    if(this.preguntas == null){
+      window.location.reload();
+    }
+    if(this.contadorPreguntas<this.preguntas.length&&this.preguntas.length>0&& this.preguntas != null){
 
       this.pregunta = this.preguntas[this.contadorPreguntas];
       this.indexRespuesta = this.pregunta.tipo=="boolean" ? ['',''] : ['A.','B.','C.','D.'];
@@ -138,7 +143,7 @@ export class PreguntasComponent implements OnInit{
     }else{
 
       this.puntosCategoria+=this.puntosAcumulados;
-      this.contadorPreguntas=11;
+      this.contadorPreguntas++;
       this.preguntasService.setPuntosCategoria(this.idCategoria,this.puntosAcumulados).subscribe({
          next:(mensaje)=>{
           console.log(mensaje);

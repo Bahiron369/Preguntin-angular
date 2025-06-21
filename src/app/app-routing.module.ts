@@ -13,6 +13,7 @@ import { JuegoComponent } from './admin/juego/juego.component';
 import { UsuariosComponent } from './admin/usuarios/usuarios.component';
 import { adminGuard } from './Auth/admin.guard';
 import { AgregarCategoriaComponent } from './admin/juego/agregar-categoria/agregar-categoria.component';
+import { ModificarCategoryComponent } from './admin/juego/modificar-category/modificar-category.component';
 
 
 const routes: Routes = [
@@ -26,7 +27,8 @@ const routes: Routes = [
   {path:'dashboard/informacion', component:InformacionUsuarioComponent, canActivate:[authGuard]},
   {path:'dashboard/admin/juego',component:JuegoComponent, canActivate:[adminGuard]},
   {path:'dashboard/admin/usuarios', component:UsuariosComponent, canActivate:[adminGuard]},
-  {path:'dashboard/admin/juego/agregar-categoria', component:AgregarCategoriaComponent, canActivate:[adminGuard]}
+  {path:'dashboard/admin/juego/agregar-categoria', component:AgregarCategoriaComponent, canActivate:[adminGuard]},
+  {path:'dashboard/admin/juego/modificar-category/:nombreCategoria/:idCategoria', component:ModificarCategoryComponent, canActivate:[adminGuard]}
 
 ];
 

@@ -1,26 +1,27 @@
 <div id="main-juego-admin">
     <div id="tabla">
-        <h1>Categorias</h1>
+        <h1 class="titulo">Categorias</h1>
         <button class="boton_agregar" (click)="routerAgregarCategoria()">➕ AGREGAR</button>
-        <table class="table table-striped table-hover">
+        <table class="tabla">
             <thead>
                 <tr>
                     <th scope="col"><strong>Id</strong></th>
                     <th scope="col"><strong>Nombre</strong></th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
+                  
                 </tr>
             </thead>
             <tbody>
                 @for(categoria of categorias; track categoria; let index = $index){
                     <tr>
                         <th scope="row">{{categoria.idCategoria}}</th>
-                        <td>{{categoria.nombre}}</td>
                         <td>
-                            <button class="btn btn-outline-danger" (click)="eliminarCategoria(categoria.idCategoria)">Eliminar ❌</button>
-                        </td>
-                        <td> 
-                            <button  class="btn btn-outline-primary">Modificar 🛠️</button>
+                            <div class="content-nombre">
+                                {{categoria.nombre}}
+                                <div class="content-botones">
+                                    <button class="boton-eliminar" (click)="eliminarCategoria(categoria.idCategoria)">Eliminar ❌</button>
+                                    <button  class="boton-modificar" (click)="routerModificarCategoria(categoria)">Modificar 🛠️</button>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 }

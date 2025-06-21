@@ -1,0 +1,74 @@
+@use '../../../Auth/style/estilos_generales.scss' as mx;
+
+@mixin estilo-columna(){
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1em 0;
+    background-color: white;
+    overflow: auto;
+
+}
+#main-agregar-categoria{
+    @include mx.contenedor(0.1em);
+    width: 60%;
+    max-height:  fit-content;
+}
+.content-row{
+    @include estilo-columna();
+    flex-wrap: wrap;
+}
+.entrada{
+    @include mx.entradas( #3498db);
+    appearance: auto;//mantiene la flecha del <select>
+    min-width: 23em;
+    margin-bottom: 1em;
+}
+.entrada-radio{
+    @include mx.entradas( #3498db);   
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}
+.content-respuesta-booleanas{
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+}
+
+#titulo{
+  @include mx.text_principal(#626567,2em);
+}
+#respuestas{
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+}
+
+.error{
+    @include mx.errors(0.5em,0.5em);
+    font-size: 1em;
+    text-align: center;
+}
+
+.ingresar{
+    @include mx.boton(#3498db,#5dade2,white,#2874a6,40%,2.5em);
+}
+.guardar{
+    @include mx.boton(#3498db,#5dade2,white,#2874a6,40%,2.5em);
+}
+
+#cantidad-preguntas{
+    font-size: 1.1em;
+    color: #797d7f;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+}

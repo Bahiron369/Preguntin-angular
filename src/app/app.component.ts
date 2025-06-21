@@ -17,7 +17,6 @@ export class AppComponent{
         this.botones_autentificacion_activados = event.urlAfterRedirects == '/' ?  true : false;
     })
 
-    this.Admin = authUsuario.IsAdmin();
    
   }
   RedirigirAuht(url:string){
@@ -48,6 +47,8 @@ export class AppComponent{
         this.usuarioRegistrado = data;
         let usuario = this.authUsuario.getInforUsuario();
         usuario != null ? this.nombreUsuario = usuario['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'] : null;
+        usuario != null ? this.Admin = this.authUsuario.IsAdmin() : '';
+
       },
       error: (errors)=>{
         console.log(errors.error)

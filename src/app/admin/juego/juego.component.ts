@@ -28,6 +28,10 @@ export class JuegoComponent implements OnInit {
     this.router.navigate(['dashboard/admin/juego/agregar-categoria']);
   }
 
+  routerModificarCategoria(categoria:any){
+    this.router.navigate([`dashboard/admin/juego/modificar-category/${categoria.nombre}/${categoria.idCategoria}`]);
+  }
+
   eliminarCategoria(id:number){
     Swal.fire({
       title:"Eliminar categoria",
@@ -42,8 +46,12 @@ export class JuegoComponent implements OnInit {
           next: result => console.log(result),
           error:err=>console.log(err.error)
         })
-        Swal.fire('Eliminado','La categoria fue eliminada.','success')
-      }
+        Swal.fire('Eliminado','La categoria fue eliminada.','success').then((result)=>{
+            if(result.isConfirmed){
+                window.location.reload();
+            }
+        })
+        }
     })
   }
 

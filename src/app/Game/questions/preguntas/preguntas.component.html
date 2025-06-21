@@ -32,7 +32,7 @@
        </div>
         <div class="main_pregunta-finalizar-juego">
                 <div id="preguntas" style="overflow: hidden;" >
-                    <div [ngClass]="tiempoEspera==1 ? 'pregunta-siguiente' : finish ? 'pregunta-siguiente' : 'pregunta'"  [ngStyle]="{'gap' : pregunta.tipo=='boolean' ? '1em' : ''}">
+                    <div [ngClass]="tiempoEspera==1 ? 'pregunta-siguiente' : contadorPreguntas>preguntas.length ? 'pregunta-siguiente' : 'pregunta'"  [ngStyle]="{'gap' : pregunta.tipo=='boolean' ? '1em' : ''}">
                         <p id="titulo">{{pregunta.nombre}}</p>
                                 @for(item of indexRespuesta; track item; let index = $index){
                                     @if(preguntaContestada||tiempo<=0){ 
@@ -73,7 +73,7 @@
                 </div>
         </div>
         <div class="content-tiempo">
-            <div [ngClass]="finish || tiempoEspera==1 ? 'tiempo-finish' :'tiempo'">
+            <div [ngClass]="contadorPreguntas>preguntas.length || tiempoEspera==1 ? 'tiempo-finish' :'tiempo'">
                 <p>{{tiempo}}</p>
             </div>
         </div>

@@ -1,1 +1,35 @@
-<p>modificar-category works!</p>
+<div id="main-modificar-categoria">
+    <p class="titulo">Nombre categoria</p>
+    <div id="content-boton">
+        <button class="boton-modificar" (click)="routerCrearPregunta()">Agregar pregunta</button>
+        <button class="boton-eliminar" (click)="eliminarTodasPreguntas()">Eliminar preguntas</button>   
+    </div>
+    <table class="tabla">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Dificultad</th>
+                <th scope="col">Puntos preguntas</th>
+                <th scope="col">Tiempo</th>
+                <th scope="col">Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(pregunta of preguntas; track preguntas.nombre){
+                <tr>
+                    <td>{{pregunta.id}}</td>
+                    <td>{{pregunta.nombre}}</td>
+                    <td style="text-align: center;">{{pregunta.tipo}}</td>
+                    <td style="text-align: center;">{{pregunta.dificultad}}</td>
+                    <td style="text-align: center;">{{pregunta.puntoPregunta}} ⭐</td>
+                    <td style="text-align: center;">{{pregunta.tiempoRespuesta}}</td>
+                    <td style="text-align: center;">
+                        <button class="boton-eliminar"  (click)="eliminarPregunta(pregunta.id)">Eliminar ❌</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

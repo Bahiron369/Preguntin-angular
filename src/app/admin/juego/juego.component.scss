@@ -1,14 +1,14 @@
+@use '../estilos_admin_generales/estilos_generales.scss' as mx;
+
 
 #main-juego-admin{
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    color: #a569bd;
+    padding: 1em;
 }
 
-#tabla{
-    padding: 2em;
-}
+
 
 .boton_agregar{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -22,4 +22,17 @@
 }
 .boton_agregar:hover{
     background-color: #138d75;
+}
+
+.content-nombre{
+ display: flex;
+ flex-direction: row;
+ justify-content: space-between;
+}
+
+
+.content-botones{
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
 }

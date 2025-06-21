@@ -17,6 +17,10 @@ export class PreguntasService {
     let headers = this.headers;
     return this.http.get<any[]>(`http://localhost:5075/Game/player/categoria/${nombreCategoria}`,{headers});
   }
+  GetAllPreguntas(id:number, nombreCategoria:string){
+    let headers = this.headers;
+    return this.http.get<any[]>(`http://localhost:5075/Game/Admin/preguntas/category/${id}/${nombreCategoria}/preguntas`,{headers});
+  }
 
   setPuntosCategoria(idCategoria:number,puntos:number):Observable<any>{
     let headers = this.headers;

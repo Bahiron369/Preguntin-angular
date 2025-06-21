@@ -1,7 +1,7 @@
 @use '../style/estilos_generales.scss' as mx;
 
 #content_login_principal{
-       @include mx.content_principal;
+    @include mx.content_principal;
 }
 
 .content_login{

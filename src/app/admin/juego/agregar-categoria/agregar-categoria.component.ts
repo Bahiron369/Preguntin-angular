@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { parse } from 'graphql';
 import { DashboardService } from '../../../Game/dashboard/service/dashboard.service';
 import { JuegoAdminService } from '../services/juego-admin.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-agregar-categoria',
   standalone: false,
   templateUrl: './agregar-categoria.component.html',
-  styleUrl: './agregar-categoria.component.css'
+  styleUrl: './agregar-categoria.component.scss'
 })
 export class AgregarCategoriaComponent{
 
@@ -18,12 +18,16 @@ export class AgregarCategoriaComponent{
         }
       });
   }
-public token:any;
  
-  agregarRespuestaBooleana(IsCorrect:boolean,valor:boolean){
+  agregarRespuestaBooleana(IsCorrect:boolean,valor:string){
       if(IsCorrect){
-        this.pregunta.respuestasCorrecta = String(valor);
-        this.pregunta.respuestasIncorrecta.push(String(!valor));
+        this.pregunta.respuestasCorrecta = valor;
+        this.pregunta.respuestasIncorrecta = [];
+        if(valor=="true"){
+          this.pregunta.respuestasIncorrecta.push("false");
+        }else{
+          this.pregunta.respuestasIncorrecta.push("true");
+        }
       }
   }
 
@@ -50,11 +54,12 @@ public token:any;
         puntoPregunta: 0,
         respuestasCorrecta:"",
         respuestasIncorrecta:[],
-        tiempoRespuesta: "90",
+        tiempoRespuesta: "00:01:30",
         tipo: ""
       };
     this.errorPregunta="";
     this.errorCategoria="";
+    this.respuestasIncorrecta =["","",""];
   }
 
   comprobarPregunta():boolean{
@@ -72,25 +77,30 @@ public token:any;
   }
 
   guardarPregunta(){
-    if(this.contadorPreguntas>=10){
+    if(this.contadorPreguntas>=1){
       console.log(this.preguntasAlmacenadas)
         this.juegoService.setPreguntas(this.preguntasAlmacenadas,this.nombreCategoria).subscribe({
           next:(data)=>{
-            console.log(data)
+            console.log(data);
+            Swal.fire('Guardar','Las preguntas se guardaron correctamente.','success').then((result)=>{
+              if(result.isConfirmed){
+                  window.location.reload();
+              }
+            })
           },
           error:err=>{
-            console.log(err.error)
+            console.log(err.error);
           }
         });
     }else{
-      this.errorCategoria="la categoria tiene que tener minimo 10 preguntas"
+      this.errorCategoria="la categoria tiene que tener minimo 1 preguntas"
     }
   }
   public nombreCategoria:string="";
   public nombreCategoriasExistentes:any;
   public contadorPreguntas:number=0;
-  public preguntasAlmacenadas:any[]=[];
-  public respuestasIncorrecta:any[] =['','',''];
+  public preguntasAlmacenadas:any=[];
+  public respuestasIncorrecta:any[] =["","",""];
   public pregunta:any = {
     dificultad: "",
     nombre: "",
