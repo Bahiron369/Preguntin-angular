@@ -1,3 +1,4 @@
+/*estilos para un boton basico*/
 @mixin botonBasico($color-fondo,$color-text){
     margin: 1.5em 0;
     padding: 3%;
@@ -8,6 +9,7 @@
     background-color: $color-fondo;
 }
 
+//estilo para el contenedor de la pregunta
 @mixin estiloContentPregunta($distancia){
     display: flex;
     flex-direction: column;
@@ -23,6 +25,7 @@
     transition: transform 0.2s ease;
 }
 
+//estilo personalizado boton respuestas
 @mixin botonRespuestas($color-sombra,$color-sombra-segundo,$color-borde,$color){
     min-width: 95%;
     margin: 0.7em 0.6em;
@@ -40,6 +43,7 @@
     }
 }
 
+//estilo personalizado para cualquier boton
 @mixin boton($color-fondo,$color-fondo-segundo, $color-text,$color-text-segundo,$color-borde, $color-sombra){
 
     @include botonBasico($color-fondo,$color-text);
@@ -58,12 +62,14 @@
 
 }
 
+//contenido general
 @mixin contenido(){
     display: flex;
     flex-direction: column;
     z-index: 1000;
 }
 
+//columna derecha (categoria y comodines)
 @mixin contenido-derecha($min-height){
     @include contenido;
     background-color: #f2f4f4;
@@ -74,6 +80,7 @@
     padding: 1em;
 }
 
+//contenedor principal
 #main{
    display: flex;
    flex-wrap: wrap;
@@ -83,6 +90,7 @@
    transition: overflow 0.2s ease;
 }
 
+//columna derecha antes y despues de finalizar
 .columna-derecha-main{
     display: flex;
     flex-direction: column;
@@ -106,6 +114,7 @@
     background-color: white;
 }
 
+//animaciones de la columna derecha
 @keyframes animar-content-final{
     from{
         min-width: 65vh;
@@ -115,6 +124,7 @@
     }
 }
 
+//contenedor puntage general
 #puntaje-global{
     background-color: white;
     border-radius: 10px;
@@ -122,10 +132,13 @@
     height: 70%;
     overflow: hidden;
 }
+
+//boton final
 #boton-continuar{
     @include boton( #f8f9f9,#e5e7e9, #626567, #909497 , #cacfd2, #979a9a);
     margin: 0 6em;
 }
+
 .main_pregunta{
     @include contenido;
     flex: 1;

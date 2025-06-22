@@ -6,6 +6,7 @@ import { ForgetPasswordComponent } from './login_forget/forget-password.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
+//todas las url de la autentificacion
 const routes: Routes = [
   {path:'auth/register', component:RegisterComponent},
   {path:'auth/login', component:LoginComponent},

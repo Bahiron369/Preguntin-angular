@@ -1,3 +1,4 @@
+//este modelo sirve para mapear los datos de la pregunta y corregir el formato de algunas 
 export class Preguntas{
 
     public type:string;

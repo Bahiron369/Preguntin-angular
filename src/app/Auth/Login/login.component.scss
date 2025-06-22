@@ -1,5 +1,7 @@
 @use '../style/estilos_generales.scss' as mx;
 
+//la mayoria de los estilos del login, registro y forget password y de los otros, estan contenidos dentro de los estilos generales
+//creados por funciones y mixin
 #content_login_principal{
     @include mx.content_principal;
 }

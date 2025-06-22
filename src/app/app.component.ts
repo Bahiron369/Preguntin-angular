@@ -13,12 +13,15 @@ export class AppComponent{
   
   constructor(private router:Router,private authUsuario:AuthService){
 
+    //este metodo sirve para ocultar los botones del inicio de sesion del navegador
     this.router.events.pipe(filter(e=>e instanceof NavigationEnd)).subscribe((event:NavigationEnd)=>{
         this.botones_autentificacion_activados = event.urlAfterRedirects == '/' ?  true : false;
     })
 
    
   }
+
+  //redirige a la url al inicio
   RedirigirAuht(url:string){
     //si vamos a la pagina de inicio los botones se activan de lo contrario no
     let redirigirInicio = url=='/' ? true : false;
@@ -33,6 +36,7 @@ export class AppComponent{
     this.router.navigate(['auth/'+url]);
   }
  
+  //si esta el inicio de sesion cambia los botones
   inicioSesion(estado:boolean):Observable<boolean>{
     let estadoBotones = new Observable<boolean>((observer)=>{
       observer.next(estado)
@@ -41,6 +45,7 @@ export class AppComponent{
     return estadoBotones;
   }
 
+  //verifica constantemente el estado del usario y sus roles
   EstadoUsurio(){
       this.authUsuario.UsuarioAutenticado().subscribe({
       next: (data)=>{
@@ -56,6 +61,7 @@ export class AppComponent{
     });
   }
 
+  //metodo para cerrar sesion y enviar al inicio 
   cerrarSesion(){
     this.authUsuario.cerraSesion();
     this.inicioSesion(true).subscribe({
@@ -74,6 +80,7 @@ export class AppComponent{
     this.toggerMenu = !this.toggerMenu;
   }
 
+  //navega a una url espesifica
   navegar(url:string){
     this.router.navigate([url]);
   }

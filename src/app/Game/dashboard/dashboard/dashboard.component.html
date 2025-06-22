@@ -1,7 +1,9 @@
 <div id="content_punto_total">
+    <!--muestra el puntaje total del jugador-->
     <h1>{{puntosTotales | number:'1.0-0'}} puntos 🌟</h1>
 </div>
 <div id="content_main">
+    <!--Muestra todas las categorias del juego: nombre y puntos-->
     @for(item of categorias; track categorias){
         <div class="Categorias" (click)="routerPreguntas(item.nombre,item.idCategoria)">
             <div class="content_img_categoria">
@@ -13,6 +15,7 @@
             </div>
         </div>
     }@empty {
+        <!--si no hay categorias-->
         <p id="mensaje_sin_categorias">No hay categorias</p>
     }
 </div>

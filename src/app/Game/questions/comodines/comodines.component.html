@@ -1,4 +1,5 @@
  <div class="comodines">
+    <!--muestra los comodimes del juego, 5 en total-->
     @for(comodin of comodines; track comodin){
         <div class="content-boton-comodin" [ngClass]="!listComodimesUsados.includes(comodin) ? 'content-boton-comodin':'content-boton-comodin-desactivado'"  alt="comodin" (click)="selectComodin(comodin)">
             <img src="comodines/comodin.svg" [ngClass]="!listComodimesUsados.includes(comodin) ? 'imagen-comodin':'imagen-comodin-desactivado'"  alt="comodin">

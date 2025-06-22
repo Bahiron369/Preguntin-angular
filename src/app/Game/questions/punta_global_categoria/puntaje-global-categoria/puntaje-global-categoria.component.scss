@@ -1,10 +1,15 @@
 @use '../../preguntas/preguntas.component.scss' as mx;
 
+//estilos para mostrar los jugadores en forma de lista
+
+//contenedor del ranking
 #ranking{
     overflow: auto;
     height: 85%;
     padding-top: 0.2em;
 }
+
+//estilo para el contenedor de la informacion del jugador
 .mostrarJugador{
     display: flex;
     flex-direction:row;
@@ -19,6 +24,7 @@
 
 }
 
+//estilos para el nombre del juagador
 .nombre{
     text-align: justify;
     font-family: "Inter", sans-serif;
@@ -27,11 +33,15 @@
     color: #7b7d7d;
     margin-left: 2em;
 }
+
+//estilo para los puntos
 .puntos{
     color: #f1c40f;
     margin-left: auto;
     
 }
+
+//estilo para el titulo del ranking
 #titulo-ranking{
 
     text-align: center;

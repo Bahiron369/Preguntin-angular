@@ -1,0 +1,55 @@
+<div id="main-usuario">
+    <p class="titulo">Usuarios</p>
+    <table class="tabla">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Email</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Roles</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(usuario of usuarios; track usuario; let i = $index){
+                <tr>
+                    <th>{{usuario.id}}</th>
+                    <th>{{usuario.name}}</th>
+                    <th>{{usuario.email}}</th>
+                    <th>{{usuario.telefono}}</th>
+                    <th>
+                       <div class="content-rol">
+                         @for(rol of usuario.rol; track rol){
+                            {{rol}}
+                        }
+                        <button class="boton-modificar" (click)="modificarRol(true,usuario)">Modificar rol</button>
+                       </div>
+                    </th>
+                    <th>
+                        <button class="boton-eliminar" (click)="eliminarUsuario(usuario.id)">Eliminar</button>
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if(activarModificarRol){
+        <div id="modificar-rol">
+            <p class="titulo-roles">Modificar roles</p>
+            <hr style="border: 1px solid #d7dbdd;">
+            <p ><strong>Nombre usuario: {{usuarioModificarRol.name}}</strong></p>
+            <div id="content-rol-actual">
+                <p>Roles actuales del usuario: </p>
+                <p *ngFor="let rol of usuarioModificarRol.rol; track rol"> {{rol}} </p>
+            </div>
+            <hr>
+            <p>Nuevo rol</p>
+            <select name="" id="" [(ngModel)]="rolesNuevos[0]" class="entrada">
+                <option value="Jugador" selected>jugador</option>
+                <option value="ambos">Administrador</option>
+            </select>
+            <p>{{errorAddRol}}</p>
+            <button (click)="guardarNuevoRolesUsuario()" class="boton-guardar">Guardar</button>
+        </div>
+    }
+</div>

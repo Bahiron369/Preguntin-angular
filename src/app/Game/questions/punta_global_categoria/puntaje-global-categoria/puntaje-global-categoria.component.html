@@ -1,7 +1,9 @@
 <div id="titulo-ranking">
+    <!--titulo-->
     <p>TOP 10</p>
 </div>
 <div id="ranking">
+     <!--muestra los 10 primeros jugadores en orden descendente a nivel global-->
     @for(item of jugadores; track item; let posicion = $index){
         <div class="mostrarJugador">
             <div><p>{{posicion+1}}</p></div>

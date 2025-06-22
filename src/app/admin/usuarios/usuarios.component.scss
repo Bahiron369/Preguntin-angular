@@ -1,0 +1,52 @@
+@use '../estilos_admin_generales/estilos_generales.scss' as mx;
+@use '../../Auth/style/estilos_generales.scss' as auth;
+
+#main-usuario{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 1em;
+}
+
+#modificar-rol{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: #f2f3f4;
+    z-index: 10000;
+    top: 25%;
+    left: 25%;
+    width: 50vw;
+    height: 50vh;
+    padding: 2em;
+}
+
+.titulo-roles{
+   @include auth.text_principal(#626567,2em);
+}
+
+.boton-guardar{
+    @include auth.boton(#3498db,#5dade2,white,#2874a6,40%,2.5em);
+}
+
+.entrada{
+    @include auth.entradas( #3498db);
+    appearance: auto;//mantiene la flecha del <select>
+    margin-bottom: 1em;
+}
+#content-rol-actual{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.5em;
+}
+
+hr{
+    border: 1px solid #d7dbdd;
+    margin: 1em 0;
+}
+p{
+    color: #626567;
+    font-size: 1.5em;
+}

@@ -1,24 +1,34 @@
+<!--Juego-->
 <div id="main" [ngStyle]="{'overflow': finish ? 'auto':'auto'}">
+    <!--una ves que se haya leido la informacion con las reglas comienza el juego-->
     @if(start){
+        <!--esta columna es la encargada de contener la informacion de la categoria (nombre y puntos), con los comodines-->
        <div [ngClass]="finish ? 'columna-derecha-main-finish': 'columna-derecha-main'">
+            <!--contenedor de la categoria-->    
             <div [ngClass]="finish ? 'content-categoria-finish': 'content-categoria'">
                 <p class="text-categoria" [ngStyle]="{'font-size': '1.1em','margin-bottom': !finish ? null : '1.5em'}">
                     {{pregunta.nombreCategoria | uppercase}}
                 </p>
                 <p [ngClass]="finish ? 'informacion-final': 'text-categoria'"style="font-size: 1em;">Puntos {{puntosAcumulados | number}} ⭐</p>
+                <!--una ves que el juego finalice, se muestra la informacion general del jugador, la categoria lo el top global-->
                 @if(finish){
+                    <!--informacion categoria y estadistica-->
                     <p class="informacion-final">Puntos categoria: +{{puntosCategoria | number }}⭐</p>
                     <p class="informacion-final">Preguntas correctas: {{(preguntaContestadaCorrectamente*100)/10}}%</p>
+                    <!--contenedor del top 10 (lista de jugadores)-->
                     <div id="puntaje-global">
                         <app-puntaje-global-categoria 
                         [puntos] = "puntosCategoria"
                         [idCategoria]= "idCategoria"
                         ></app-puntaje-global-categoria>
                     </div>
+                    <!--bto para salir del juego, una ves visto la categoria-->
                     <button id="boton-continuar" (click)="volverInicio()">Continuar</button>
                 }
             </div>
+            <!--si el juego no a finalizado muestra los comodines-->
             @if(!finish){
+                <!--este contenedor contiene los comodines que ayudan al jugador-->
                 <app-comodines
                     [pregunta] = "pregunta"
                     [comodinUsadoPregunta]= "comodinUsadoPregunta"
@@ -31,18 +41,24 @@
             }
        </div>
         <div class="main_pregunta-finalizar-juego">
+                <!--este contenedor es el que muestra las preguntas-->
                 <div id="preguntas" style="overflow: hidden;" >
+                    <!--condicional para animacion del contenedor y si mostrar la seguiente pregunta o no-->
                     <div [ngClass]="tiempoEspera==1 ? 'pregunta-siguiente' : contadorPreguntas>preguntas.length ? 'pregunta-siguiente' : 'pregunta'"  [ngStyle]="{'gap' : pregunta.tipo=='boolean' ? '1em' : ''}">
                         <p id="titulo">{{pregunta.nombre}}</p>
+                                <!--muestra las respuestas-->
                                 @for(item of indexRespuesta; track item; let index = $index){
+                                    <!--muestra la respuesta correcta al finalizar la pregunta (tiempo fuera o respuesta selecionada)-->
                                     @if(preguntaContestada||tiempo<=0){ 
                                         @if(respuestas[index]==respuestaSelecionada){
+                                            <!--muestra la respuesta selecionada por el jugador-->
                                             @if(respuestaSelecionada==pregunta.respuestasCorrecta){
                                                 <button class="boton-respuesta-correcta">{{item}} {{respuestas[index]}}</button>
                                             }@else {
                                                 <button class="boton-respuesta-incorrecta">{{item}} {{respuestas[index]}}</button>
                                             }
                                         }@else {
+                                            <!--muestra la respuesta correcta, independientemente si fue selecionada o no-->
                                             @if(respuestaSelecionada!=pregunta.respuestasCorrecta&&respuestas[index]==pregunta.respuestasCorrecta){
                                                 <button class="boton-respuesta-correcta-default">{{item}} {{respuestas[index]}}</button>
                                             }@else {
@@ -50,8 +66,10 @@
                                             }
                                         }
                                     }@else{
+                                        <!--si el comodin (mostrar respuesta correcta) fue usado, muestra la respuesta correcta-->
                                         @if(mostrarRespuesta&&respuestas[index]==pregunta.respuestasCorrecta){
                                             <button class="boton-respuesta-correcta" (click)="RespuestaSeleccionada(respuestas[index])">{{item}} {{respuestas[index]}}</button>
+                                        <!--si el comodin mostrar dos respuestas incorrectas fue selecionada (muestra las dor respuestas incorrectas)-->
                                         }@else if(eliminarDosRespuesta&&respuestasIncorrectSelect.includes(respuestas[index])&&pregunta.tipo=="multiple"){
                                             <button class="boton-respuesta-incorrecta" (click)="RespuestaSeleccionada(respuestas[index])">{{item}} {{respuestas[index]}}</button>
                                         }@else if(eliminarDosRespuesta&&pregunta.tipo=="boolean"&&respuestas[index]!=pregunta.respuestasCorrecta){
@@ -62,6 +80,7 @@
                                         }
                                     }
                                 }
+                        <!--contenedor para la informacion de la pregunta (dificultad, puntos y numero de pregunta)-->
                         <div id="content-footer-pregunta" [ngStyle]="{'margin-top' : pregunta.tipo=='boolean' ? '5em' : '0'}">
                             <p class="text-footer">Puntos: {{pregunta.puntoPregunta}} ⭐</p>
                             <p class="text-footer">{{pregunta.dificultad | uppercase}}</p>
@@ -72,12 +91,14 @@
                     </div>
                 </div>
         </div>
+        <!--contenedor del tiempo de las preguntas-->
         <div class="content-tiempo">
             <div [ngClass]="contadorPreguntas>preguntas.length || tiempoEspera==1 ? 'tiempo-finish' :'tiempo'">
                 <p>{{tiempo}}</p>
             </div>
         </div>
     }@else {
+        <!--Este contenedor tiene la informacion principal del juego (reglas y metodologia)-->
         <div id="content_informacion_juego">
                 <p id="nombre-categoria">{{nombreCategoria}}</p>
                 <div>

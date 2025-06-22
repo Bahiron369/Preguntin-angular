@@ -3,6 +3,7 @@
 
 <!-- Image and text -->
 <nav id="nav_principal">
+    <!--conbrovacion del estado del usario-->
     {{EstadoUsurio()}}
     <div id="text_titulo">
         <a id="titulo" routerLink="/">
@@ -16,6 +17,7 @@
         
     }@else{
         @if(botones_autentificacion_activados){
+            <!--muestra lo sbotones de autentificacion-->
             <div id="content_botones_sesion">
                 <button [ngClass]="botones_autentificacion_activados ? 'botones_sesion' : 'botones_sesion_disabled' "  (click)="RedirigirAuht('login')">Iniciar sesion</button>
                 <button [ngClass]="botones_autentificacion_activados ? 'botones_sesion' : 'botones_sesion_disabled' " (click)="RedirigirAuht('register')">Registrarse</button>
@@ -26,16 +28,19 @@
 </nav>
 
  @if(usuarioRegistrado){
+    <!--Muestra la barra lateral si el usario esta registrado-->
     <aside [ngClass]="toggerMenu ? 'aside_oculto' : 'aside_visible'">
         <p class="nombre-usuario">{{nombreUsuario}}</p>
         <hr style="margin-top: 1em;">
         <button class="boton_opciones_aside" (click)="navegar('dashboard')">Categorias 🏷️</button>
+        <!--Opciones de administrador-->
         @if(Admin){
             <button class="boton_opciones_aside" (click)="navegar('dashboard/admin/juego')">Juego 🎮</button>
             <button class="boton_opciones_aside" (click)="navegar('dashboard/admin/usuarios')">Usuarios 👤</button>
         }
         <button class="boton_opciones_aside" (click)="navegar('dashboard/informacion')">Informacion ℹ️</button>
         <hr>
+        <!--cerrar sesion-->
         <button (click)="cerrarSesion()" (click)="navegar('/informacion')" class="botones_cerrar_sesion">Cerrar sesión 🚪</button>
     </aside>
  }

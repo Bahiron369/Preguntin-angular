@@ -13,6 +13,7 @@ import { RegistroService } from './service Register/registro.service';
 export class RegisterComponent {
 
   constructor(private fb:FormBuilder, private router:Router, private registroServicio:RegistroService){
+    //formulario de registro
     this.register = fb.group({
       nombre: ['',[Validators.required,Validators.minLength(5),Validators.maxLength(15)]],
       email: ['',[Validators.email,Validators.required,Validators.pattern(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,}/)]],
@@ -21,13 +22,16 @@ export class RegisterComponent {
       confirPassword: ['',Validators.required]
     })
 
+    //formulario del codigo de confirmacion
     this.formCodigo = fb.group({
       codigo:['',Validators.required]
     })
   }
 
+  //se envia la informacion suministrada para el registro
   async EnviarRegistro(){
 
+      //primero valida la informacion y despues la envia al servidor
       if(this.comprobarErrores()){
         this.usuario.Name = this.register.get("nombre")?.value;
         this.usuario.Email = this.register.get("email")?.value;
@@ -50,6 +54,7 @@ export class RegisterComponent {
       }
   }
 
+  //conbrueva de que todos los datos cumplan con los requerimientos
   comprobarErrores(){
 
     //comprobamos que todo la la informacion suministrada sea correcta
@@ -63,6 +68,7 @@ export class RegisterComponent {
     return this.register.valid && this.register.get("password")?.value==this.register.get("confirPassword")?.value;
   }
 
+  //valida la informacion desde el servidor
   async validarInformacion(){
 
     let respuesta = await firstValueFrom(this.registroServicio.ValidarInformacion(this.usuario));
@@ -102,6 +108,7 @@ export class RegisterComponent {
 
   }
   
+  //valida el codigo enviado al correo
   validarCodigo(){
 
     if(!isNaN(Number.parseInt(this.formCodigo.get('codigo')?.value))){

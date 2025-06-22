@@ -1,0 +1,58 @@
+@use '../../Auth/style/estilos_generales.scss' as mx;
+
+///Estilos genericos para la representacion de tablas, incluye estilos para la tabla, el cuerpo, titulo y la cabecera
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.tabla th, .tabla td {
+  border-bottom: 1px solid #626567;
+  padding: 8px;
+  text-align: left;
+}
+
+.tabla tbody{
+   color: #515a5a;
+   box-shadow: 0 0 1px #d7dbdd
+                0 1px 1px #d7dbdd
+                1px 0 1px #d7dbdd;
+}
+
+.tabla tbody tr:hover{
+   color: #797d7f;
+   background-color: #d7dbdd;
+}
+
+.tabla thead {
+  font-weight: bold;
+  font-size: 1.1em;
+  text-align: left;
+}
+
+//estilos genericos para los botones de eliminacion y modificacion en el ambiente del administrador 
+.boton-eliminar{
+    @include mx.boton(#d35400,#dc7633,white,#d35400,40,1em);
+    padding: 0.5em;
+}
+
+.boton-modificar{
+    @include mx.boton(#3498db,#5dade2,white,#1f618d,40,1em);
+    padding: 0.5em;
+}
+
+//titulo general del componente
+.titulo{
+    font-size: 3em;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 400;
+}
+
+//vara el div de los roles del usuario 
+.content-rol{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}

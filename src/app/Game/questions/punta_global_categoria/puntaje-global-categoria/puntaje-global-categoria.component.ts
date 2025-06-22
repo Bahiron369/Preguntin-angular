@@ -20,6 +20,7 @@ export class PuntajeGlobalCategoriaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    //obtiene los 10 primeros jugadores provicionados del servidor 
     this.categoria.obtnerTopCategoria(this.idCategoria).subscribe({
       next:(data)=>{
         this.jugadores=data;
@@ -28,12 +29,6 @@ export class PuntajeGlobalCategoriaComponent implements OnInit {
         console.log(err);
       }
     })
-  }
-
-  MostrarJugadores(){
-    if(this.jugadores.includes(this.nombreUsuario)){
-
-    }
   }
 
   public jugadores:any;

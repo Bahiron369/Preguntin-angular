@@ -1,5 +1,6 @@
 @use '../preguntas/preguntas.component.scss' as mx;
 
+//mixin para la igagen de los comodines
 @mixin imagenComodin(){
     position: relative;
     border-radius: 2%;
@@ -9,6 +10,7 @@
     transition: transform .4s ease;
 }
 
+//mixin para los botones de los comodines
 @mixin botonComodin($ancho){
     position: absolute;
     width: $ancho;
@@ -21,6 +23,7 @@
     padding-left: 1em;
 }
 
+//mixin para el contenido de los comodines 
 @mixin content-comodin($max-ancho){
     position: relative;
     display: flex;
@@ -30,6 +33,7 @@
     max-width: $max-ancho;
 }
 
+//mixin para el estilo de los comodines
 @mixin comodin-estilo(){
     @include mx.contenido-derecha(80%);
     display:inline-flex;
@@ -39,6 +43,8 @@
     min-width: 92%;
     transition: transform .2s ease;
 }
+
+
 .comodines{
   @include comodin-estilo;
 }
@@ -48,10 +54,12 @@
    @include imagenComodin();
 }
 
+//animacion del comodin
 .imagen-comodin:hover{
     transform: rotate(-90deg);
 }
 
+//animacion cuando esta desactivado (fue usado)
 .imagen-comodin-desactivado{
     @include imagenComodin();
     transform: rotate(-90deg);

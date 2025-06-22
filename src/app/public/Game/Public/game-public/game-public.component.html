@@ -1,13 +1,17 @@
 <div id="seccion">
+    <!--Juego comienza-->
     @if(start){
+         <!--El contenedor de las preguntas-->
          <div id="content_pregunta">
             <div id="content_icono_pregunta">?</div>
             @if(numeroPregunta==0){
+                <!--Mensaje de incio para las preguntas-->
                 <p class="text_inicio_juego" style="margin-top: 3em;">Responde estas 10 preguntas aleatorias.</p>
                 <p style="font-size: 3em;">🎴</p>
                 <p class="text_inicio_juego">!Comenzemos!</p>
                 <button class="botones_juego_publico" id="boton_inicio" (click)="GetPreguntasPublicas()">Empezar</button>
             }@if(numeroPregunta>=10){
+                 <!--este mensaje se muestra al finalizar las preguntas-->
                 <div id="content_mensaje_final">
                     <p>
                         Si deseas seguir respondiendo mas preguntas, con mas emoción ¡Registrate Gratis!, y vive la mejor experiencia los juego de preguntas.
@@ -22,7 +26,9 @@
             }
             @else {
                 <h1 id="titulo_pregunta">{{preguntaCurrent.question}}</h1>
+                <!--contenedor respuestas-->
                 <div id="respuesta">
+                    <!--controla y muestra las respuestas del juego-->
                     @for(item of respuesta; track respuesta){
                         @if(!PreguntaContestada){
                             <button (click)="ValidarRespuesta(item)" class="boton_respuesta" >{{item}}</button>
@@ -41,7 +47,7 @@
             <button [ngClass]="botonSiguienteActivado ? 'boton_siguiente_activado' : 'boton_siguiente_desactivado'"  (click)="GetPreguntasPublicas()">siguiente</button>
         </div>
     }@else{
-        
+        <!--inicio de la aplicacion-->
         <div id="content_main">
             <img src="imagen_fondo_inicio.svg" id="imagen_fondo" alt="Imagen de inicio">
             <button id="boton_play" (click)="Iniciar(true)">Play</button>

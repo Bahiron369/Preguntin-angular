@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
   public constructor(private categoriaServicio:DashboardService, private router:Router){}
 
   ngOnInit(): void {
+    //antes de iniciar el juego, obtiene las categorias
     this.categoriaServicio.obtenerCategoria().subscribe({
       next: (data)=>{
         this.categorias=data;
@@ -37,6 +38,7 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  //cuando seleciona una categoria se dirige a las preguntas
   routerPreguntas(nombreCategoria:string,idCategoria:number){
     this.router.navigate([`dashboard/preguntas`,nombreCategoria,idCategoria]);
   }

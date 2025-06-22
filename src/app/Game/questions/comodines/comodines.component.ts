@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, output, Output } from '@angular/core';
 })
 export class ComodinesComponent {
 
+  //estos datos provienen del componente padre (Preguntas)
   @Input() pregunta: any;
   @Input() comodinUsadoPregunta: any;
   @Output() enviarTiempo = new EventEmitter<any>();
@@ -18,6 +19,7 @@ export class ComodinesComponent {
   
   public constructor(){  }
 
+  //funcion que enruta los comodines, obtiene el nombre dle comodin y lo seleciona
   selectComodin(comodin:string){
 
     if(!this.estadoComodines()){
@@ -36,6 +38,7 @@ export class ComodinesComponent {
     }
   }
 
+  //agrega tiempo a la pregunta
   comodinAgregarTiempo(comodin:string){
     if(this.comodinesUsados<3){
       this.tiempo += 90;
@@ -46,6 +49,7 @@ export class ComodinesComponent {
     }
   }
 
+  //congela el tiempo de la pregunta
   comodinPausarTiempo(comodin:string){
      if(this.comodinesUsados<3){
         this.enviarPausarTiempo.emit(true);
@@ -55,6 +59,7 @@ export class ComodinesComponent {
       }
   }
 
+  //triplica los puntos de la pregunta
   comodinAgregarPuntos(comodin:string){
     if(this.comodinesUsados<3){
       this.pregunta.puntoPregunta*= 3;
@@ -66,6 +71,7 @@ export class ComodinesComponent {
 
   }
 
+  //muestr ala repsuesta correcta a mitad de puntos
   comodinMostrarRespuestaCorrecta(comodin:string){
     if(this.comodinesUsados<3){
         this.enviarMostrarPregunta.emit(true)
@@ -76,6 +82,7 @@ export class ComodinesComponent {
     
   }
 
+  //muestra dos respuestas incorrectas, dejando una correcta y una incorrecta
   comodinEliminarDosRespuesta(comodin:string){
     if(this.comodinesUsados<3){
       this.enviarEliminarDosRespuesta.emit(true)
@@ -85,6 +92,7 @@ export class ComodinesComponent {
     }
   }
 
+  //valida el estado del comidon (usado, no usado, cantidad de comodines usados)
   estadoComodines():boolean{
     let desactivar = this.comodinesUsados>3||this.comodinUsadoPregunta ? true : false;
     return desactivar;

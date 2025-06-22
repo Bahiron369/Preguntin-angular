@@ -1,3 +1,4 @@
+//contenedor de la categoria, el cuadro de la imagen, nombre y puntos
 .Categorias{
     border-radius: 10px;
     border: solid 2px #cacfd2;
@@ -13,6 +14,7 @@
     cursor: pointer;
 }
 
+//cuando el mouse esta sobre la categoria
 .Categorias:hover{
     box-shadow: 4px 4px 12px  #eaeded,
                 4px 4px 10px #eaeded;
@@ -25,12 +27,14 @@
     transform: scale(0.97);/*agranda a un 10% el conteedor*/
 }
 
+//contenedor de la imagen de la categoria
 .content_img_categoria{
     display: flex;
     align-content: center;
     justify-content: center;
 }
 
+//contenedor principal, la pantalla principal
 #content_main{
     display: flex;
     flex-wrap: wrap;
@@ -38,6 +42,7 @@
     justify-content: center;
 }
 
+//la informacion:nombre y puntos
 .content_inf_categoria{
     display: flex;
     flex-direction: row;
@@ -47,6 +52,7 @@
     border-radius: 10px;
 }
 
+//puntos totales dle jugador
 #content_punto_total{
     font-size: 1.5em;
     font-family: Arial, Helvetica, sans-serif;
@@ -56,6 +62,7 @@
 
 }
 
+//estilo de cuando no hay mensajes
 #mensaje_sin_categorias{
     margin-top: 20%;
     text-align: center;

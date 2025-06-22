@@ -18,11 +18,14 @@ export class GamePublicComponent implements OnInit{
     this.GetAllQuestion();
   }
 
+  //obtiene todas las preguntas 
   GetAllQuestion(){
     this.preguntasServicio.GetPreguntas().subscribe(data=>{
           this.preguntas = data;
     })
   }
+
+
   public start: boolean = false;
   public preguntas: Preguntas[] = [];
   public preguntaCurrent: any;
@@ -63,6 +66,7 @@ export class GamePublicComponent implements OnInit{
     this.RespuestaSelecionada = ""
   }
 
+  //redirige al inicio
   Redirigir(url:string){
     this.router.navigate([url])
   }
