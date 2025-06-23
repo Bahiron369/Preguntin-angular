@@ -1,5 +1,5 @@
 export const environment = {
-    prodution:false,
+    production:false,
     url:'http://localhost:5075',
     nombreApp:'Preguntin'
 }

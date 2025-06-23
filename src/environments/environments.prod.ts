@@ -1,5 +1,5 @@
 export const environment = {
-    prodution:true,
+    production:true,
     url:'https://preguntinaspnet.azurewebsites.net',
     nombreApp:'PreguntinProd'
 }
