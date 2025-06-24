@@ -40,22 +40,22 @@ export class PreguntasComponent implements OnInit{
 
   //obtenemos del servidor las preguntas de la categoria selecionada
   ngOnInit(): void {
-    this.preguntasService.GetPreguntas(this.nombreCategoria).subscribe({
-       next: (result)=>{
-        this.preguntas = result;
-        console.log(this.preguntas)
-      },
-      error: (errors)=>{
-        console.log(errors);
-        console.log(this.preguntas)
-      }
-    });
+    
   } 
 
   //inicia el juego y mostramos la primera pregunta
   Start(){
-    this.start=!this.start;
-    this.PreguntaSiguiente();
+    this.preguntasService.GetPreguntas(this.nombreCategoria).subscribe({
+       next: (result)=>{
+        this.start=!this.start;
+        this.preguntas = result;
+        this.PreguntaSiguiente();
+      },
+      error: (errors)=>{
+        this.start=false;
+        console.log(errors);
+      }
+    });
   }
 
   //tiempo que tiene cada respuesta 90 min por cada una 
