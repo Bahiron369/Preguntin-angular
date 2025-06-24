@@ -175,7 +175,7 @@ export class PreguntasComponent implements OnInit{
   //agrega puntos si la respuesta es la correcta y esta puntos si no lo es
   RespuestaSeleccionada(nombre:string){
     //acumula puntos
-    this.puntosAcumulados += nombre == this.pregunta.respuestasCorrecta ? this.pregunta.puntoPregunta :  this.puntosAcumulados >0 ? -75 : 0;
+    this.puntosAcumulados += nombre == this.pregunta.respuestasCorrecta ? this.pregunta.puntoPregunta :  this.puntosAcumulados >=0 ? -75 : 0;
     this.respuestaSelecionada = nombre;
     this.preguntaContestada=true;
     this.preguntaContestadaCorrectamente += nombre == this.pregunta.respuestasCorrecta ? 1 : 0;
