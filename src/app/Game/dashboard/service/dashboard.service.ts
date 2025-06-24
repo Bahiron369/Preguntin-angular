@@ -33,7 +33,7 @@ export class DashboardService {
   //actualiza los puntos del jugador
   setPuntosJugador(puntos:number):Observable<string>{
     let headers = this.headers;
-    return this.http.post<string>(environment.url+'/Game/player/puntosJugador',{"id":this.idUsuario, "puntos":puntos},{headers})
+    return this.http.post<string>(environment.url+'/Game/player/puntosJugador',[{"id":this.idUsuario, "puntos":puntos}],{headers})
   }
 
   //obtiene el top global de la categoria
