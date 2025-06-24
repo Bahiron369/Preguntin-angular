@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environments';
 
 @Injectable({
   providedIn: 'root'
@@ -13,37 +14,37 @@ export class JuegoAdminService {
 
   setPreguntas(preguntas:any,nombreCategoria:string):Observable<any>{
     let headers = this.headers;
-    return this.http.post(`http://localhost:5075/Game/Admin/preguntas/${nombreCategoria}`,preguntas,{headers});
+    return this.http.post(environment.url+`/Game/Admin/preguntas/${nombreCategoria}`,preguntas,{headers});
   }
   
   eliminarCategoria(idCategoria:number):Observable<any>{
     let headers = this.headers;
-    return this.http.delete<any>(`http://localhost:5075/Game/Admin/preguntas/delete/category/${idCategoria}`,{headers});
+    return this.http.delete<any>(environment.url+`/Game/Admin/preguntas/delete/category/${idCategoria}`,{headers});
   }
 
   eliminarPregunta(idPregunta:number):Observable<any>{
     let headers = this.headers;
-    return this.http.delete<any>(`http://localhost:5075/Game/Admin/preguntas/delete/pregunta/${idPregunta}`,{headers}); 
+    return this.http.delete<any>(environment.url+`/Game/Admin/preguntas/delete/pregunta/${idPregunta}`,{headers}); 
   }
 
   eliminarTodasPreguntas(idCategoria:number):Observable<any>{
     let headers = this.headers;
-    return this.http.delete<any>(`http://localhost:5075/Game/Admin/preguntas/${idCategoria}`,{headers});
+    return this.http.delete<any>(environment.url+`/Game/Admin/preguntas/${idCategoria}`,{headers});
   }
 
   GetUsuarios():Observable<any>{
     let headers = this.headers;
-    return this.http.get<any>(`http://localhost:5075/Admin/Users/AllUsers`,{headers});
+    return this.http.get<any>(environment.url+`/Admin/Users/AllUsers`,{headers});
   }
 
   updateRoleUsuario(idUsuario:string,roles:any):Observable<any>{
     let headers = this.headers;
-    return this.http.put<any>(`http://localhost:5075/Admin/Users/UpdateRoleUser/${idUsuario}`,roles,{headers});
+    return this.http.put<any>(environment.url+`/Admin/Users/UpdateRoleUser/${idUsuario}`,roles,{headers});
   }
 
   deleteUser(idUsuario:string){
     let headers = this.headers;
-    return this.http.delete<any>(`http://localhost:5075/Admin/Users/DeleteUser/${idUsuario}`,{headers});
+    return this.http.delete<any>(environment.url+`/Admin/Users/DeleteUser/${idUsuario}`,{headers});
   }
   
   public headers:any;
